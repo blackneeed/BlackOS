@@ -1,6 +1,9 @@
 #include "StringUtil.cpp"
 #include "drivers/Screen.cpp"
 
+extern char commandBuffer[];
+extern uint8_t commandLength;
+
 void versionCommand(char* command_parts[]) {
     printString("*********************************************\r\n");
     printString("*********************************************\r\n");
