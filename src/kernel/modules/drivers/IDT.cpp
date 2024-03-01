@@ -2,6 +2,7 @@
 #include "../Typedefs.hpp"
 #include "../Keymap.cpp" // KB sets
 #include "../Keys.hpp" // All constants for scancodes
+#include "../StringUtil.cpp"
 #include "IO.cpp"
 #include "Screen.cpp"
 
@@ -22,6 +23,7 @@ extern "C" void LoadIDT();
 void handleCharacter(char chr);
 void handleEnter();
 void handleBackspace();
+extern bool capsLockPressed;
 
 void InitializeIDT()
 {
@@ -51,12 +53,20 @@ extern "C" void isr1_handler()
 
         case BACKSPACE:
             handleBackspace();
-            break; 
+            break;
+
+        case CAPS:
+            capsLockPressed = !capsLockPressed;
+            break;
 
         default:
             if (scanCode < 0x3A)
             {
-                handleCharacter(KBset1::ScanCodeLookupTable[scanCode]);
+                if (capsLockPressed) {
+                    handleCharacter(charToUpper(KBset1::ScanCodeLookupTable[scanCode]));
+                } else {
+                    handleCharacter(charToLower(KBset1::ScanCodeLookupTable[scanCode]));
+                }
             }
             break;
     }

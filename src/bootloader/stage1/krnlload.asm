@@ -3,18 +3,19 @@
 [org 0x7c00]
 [bits 16]
 
-%define SectorsToRead 32
+%define SectorsToRead 48
 %define LoadKernelTo 0x8000
 %define KernelStartSector 0x02
 %define EndOfLine 0x0A, 0x0D
 
 %macro SetDataSegments 1
 ; Set data segments
-mov ds, %1
-mov es, %1
-mov fs, %1
-mov gs, %1
-mov ss, %1
+mov ax, %1
+mov ds, ax
+mov es, ax
+mov fs, ax
+mov gs, ax
+mov ss, ax
 %endmacro
 
 %macro PushAll 0

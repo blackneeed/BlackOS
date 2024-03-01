@@ -10,6 +10,7 @@ bool canDeleteChar = false;
 
 #define VGA_MEMORY (unsigned char*)0xb8000
 #define VGA_WIDTH 80
+#define VGA_HEIGHT 25
 #define CRT_CONTROLLER_PORT 0x3D4
 
 void clearScreen(uint64_t ClearColor = DEFUALT_COLOR)
