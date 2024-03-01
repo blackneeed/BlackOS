@@ -1,10 +1,10 @@
 #pragma once
-#include "../Typedefs.hpp"
-#include "../Keymap.cpp" // KB sets
-#include "../Keys.hpp" // All constants for scancodes
-#include "../StringUtil.cpp"
-#include "IO.cpp"
-#include "Screen.cpp"
+#include "../../Typedefs.hpp"
+#include "../../StringUtil.cpp"
+#include "../IO.cpp"
+#include "../Screen.cpp"
+#include "Keymap.cpp" // KB sets
+#include "Keys.hpp" // All constants for scancodes
 
 struct IDT64
 {

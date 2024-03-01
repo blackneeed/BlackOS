@@ -1,6 +1,5 @@
-#include "modules/drivers/Debug.cpp"
 #include "modules/drivers/Screen.cpp"
-#include "modules/drivers/IDT.cpp"
+#include "modules/drivers/IDT/IDT.cpp"
 #include "modules/StringUtil.cpp"
 
 #define MAX_COMMAND_LENGTH 128
@@ -9,6 +8,13 @@ uint8_t lastPrint;
 uint8_t commandLength;
 bool capsLockPressed = false;
 
+void Run() {
+    canDeleteChar = true;
+    if (cursorPos <= lastPrint) {
+        canDeleteChar = false;
+    }
+}
+
 extern "C" void _start() {
     clearScreen();
     setCursorPos(0);
@@ -16,15 +22,10 @@ extern "C" void _start() {
     printString("> ");
     lastPrint = cursorPos;
     InitializeIDT();
-    while (true) {
-        canDeleteChar = true;
-        if (lastPrint >= cursorPos) {
-            canDeleteChar = false;
-        }
-        // asm("hlt"); // Wait for something to happen/a interrupt
-    }
+    while (true) { Run(); }
     return;
 }
+
 
 void executeCommand() {
     commandBuffer[commandLength] = '\0';

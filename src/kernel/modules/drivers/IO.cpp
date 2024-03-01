@@ -11,15 +11,15 @@
 #define ICW1_ICW4 0x01
 #define ICW4_8086 0x01
 
-void outb(uint16_t port, uint8_t val)
+inline void outb(uint16_t port, uint8_t val)
 {
-    asm volatile("outb %0, %1" : : "a"(val), "Nd"(port));
+    asm volatile ("outb %0, %1" : : "a"(val), "Nd"(port));
 }
 
-uint8_t inb(uint16_t port)
+inline uint8_t inb(uint16_t port)
 {
-    unsigned char returnVal;
-    asm volatile("inb %1, %0" : "=a"(returnVal) : "Nd"(port));
+    uint8_t returnVal;
+    asm volatile ("inb %1, %0" : "=a"(returnVal) : "Nd"(port));
     return returnVal;
 }
 

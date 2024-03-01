@@ -9,7 +9,7 @@ namespace KBset1
         'q', 'w', 'e', 'r',
         't', 'y', 'u', 'i',
         'o', 'p', '[', ']',
-        0/*Enter is handled by scancode*/, 0, 'a', 's',
+        0, 0, 'a', 's',
         'd', 'f', 'g', 'h',
         'j', 'k', 'l', ';',
         '\'', '`', 0, '\\',
