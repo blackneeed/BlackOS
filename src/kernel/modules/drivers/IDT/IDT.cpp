@@ -24,6 +24,8 @@ void handleCharacter(char chr);
 void handleEnter();
 void handleBackspace();
 extern bool capsLockPressed;
+extern bool leftShiftPressed;
+extern bool rightShiftPressed;
 
 void InitializeIDT()
 {
@@ -59,10 +61,23 @@ extern "C" void isr1_handler()
             capsLockPressed = !capsLockPressed;
             break;
 
+        case LEFTSHIFT:
+			leftShiftPressed = true;
+			break;
+		case LEFTSHIFTRELEASE:
+			leftShiftPressed = false;
+            break;
+		case RIGHTSHIFT:
+			rightShiftPressed = true;
+			break;
+		case RIGHTSHIFTRELEASE:
+			rightShiftPressed = false;
+			break;
+
         default:
             if (scanCode < 0x3A)
             {
-                if (capsLockPressed) {
+                if (capsLockPressed | leftShiftPressed | rightShiftPressed) {
                     handleCharacter(charToUpper(KBset1::ScanCodeLookupTable[scanCode]));
                 } else {
                     handleCharacter(charToLower(KBset1::ScanCodeLookupTable[scanCode]));

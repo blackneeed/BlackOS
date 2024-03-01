@@ -4,15 +4,14 @@
 
 #define MAX_COMMAND_LENGTH 128
 char commandBuffer[MAX_COMMAND_LENGTH];
-uint8_t lastPrint;
+uint16_t lastPrint;
 uint8_t commandLength;
 bool capsLockPressed = false;
+bool leftShiftPressed = false;
+bool rightShiftPressed = false;
 
 void Run() {
-    canDeleteChar = true;
-    if (cursorPos <= lastPrint) {
-        canDeleteChar = false;
-    }
+    
 }
 
 extern "C" void _start() {
@@ -45,7 +44,7 @@ void executeCommand() {
         printString("- 'version'");
     } else {
         printString("Unknown command '");
-        printString(command);
+        printString(command_parts[0]); // Print the one with orginal caps
         printString("'!,\r\n");
         printString("Type 'help' for help.");
     }
@@ -68,9 +67,9 @@ void handleCharacter(char chr) {
 }
 
 void handleBackspace() {
-    if (canDeleteChar) {
+    if (cursorPos > lastPrint) {
         deleteChar();
-        commandLength--;  // Decrement the command length
-        commandBuffer[commandLength] = '\0';  // Null-terminate the command buffer
+        commandLength--;
+        commandBuffer[commandLength] = '\0';
     }
 }
