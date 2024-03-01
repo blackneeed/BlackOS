@@ -1,6 +1,7 @@
 #include "modules/drivers/Screen.cpp"
 #include "modules/drivers/IDT/IDT.cpp"
 #include "modules/StringUtil.cpp"
+#include "modules/commands.cpp"
 
 #define MAX_COMMAND_LENGTH 128
 char commandBuffer[MAX_COMMAND_LENGTH];
@@ -23,31 +24,6 @@ extern "C" void _start() {
     InitializeIDT();
     while (true) { Run(); }
     return;
-}
-
-
-void executeCommand() {
-    commandBuffer[commandLength] = '\0';
-    const char* command_all = (const char*)commandBuffer;
-    char* command_parts[4]; // Up to 4 arguments
-    splitString((char*)command_all, ' ', command_parts, 4);
-    const char* command = toLower(command_parts[0]);
-    if (strcmp(command, "version") == 0) {
-        printString("*********************************************\r\n");
-        printString("*********************************************\r\n");
-        printString("****************    BlackOS    **************\r\n");
-        printString("******************** 1.0.0 ******************\r\n");
-        printString("*********************alpha*******************\r\n");
-        printString("*********************************************");
-    } else if (strcmp(command, "help") == 0) {
-        printString("Commands:\r\n");
-        printString("- 'version'");
-    } else {
-        printString("Unknown command '");
-        printString(command_parts[0]); // Print the one with orginal caps
-        printString("'!,\r\n");
-        printString("Type 'help' for help.");
-    }
 }
 
 void handleEnter() {
