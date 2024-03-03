@@ -7,26 +7,36 @@
 uint16_t cursorPos;
 uint8_t DEFUALT_COLOR = BG_BLACK | FG_RED;
 
-#define VGA_MEMORY (unsigned char*)0xb8000
+#define VGA_MEMORY (uint8_t*)0xb8000
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
 #define CRT_CONTROLLER_PORT 0x3D4
 
-unsigned short posFromCoords(uint8_t x, uint8_t y){
+uint16_t posFromCoords(uint8_t x, uint8_t y){
     return y * VGA_WIDTH + x;
 }
+
+void setCursorPos(uint16_t newPos){
+    outb(CRT_CONTROLLER_PORT, 0x0F);
+    outb(CRT_CONTROLLER_PORT + 1, (uint8_t)(newPos & 0xFF));
+    outb(CRT_CONTROLLER_PORT, 0x0E);
+    outb(CRT_CONTROLLER_PORT + 1, (uint8_t)((newPos >> 8) & 0xFF));
+
+    cursorPos = newPos;
+}
+
 
 void scrollScreenUp() {
     for (int y = 1; y < VGA_HEIGHT; ++y) {
         for (int x = 0; x < VGA_WIDTH; ++x) {
-            unsigned short srcPos = posFromCoords(x, y);
-            unsigned short destPos = posFromCoords(x, y - 1);
+            uint16_t srcPos = posFromCoords(x, y);
+            uint16_t destPos = posFromCoords(x, y - 1);
             *(VGA_MEMORY + destPos * 2) = *(VGA_MEMORY + srcPos * 2);
             *(VGA_MEMORY + destPos * 2 + 1) = *(VGA_MEMORY + srcPos * 2 + 1);
         }
     }
 
-    unsigned short lastRowPos = posFromCoords(0, VGA_HEIGHT - 1);
+    uint16_t lastRowPos = posFromCoords(0, VGA_HEIGHT - 1);
     for (int x = 0; x < VGA_WIDTH; ++x) {
         *(VGA_MEMORY + lastRowPos * 2) = ' ';
         *(VGA_MEMORY + lastRowPos * 2 + 1) = DEFUALT_COLOR;
@@ -37,14 +47,14 @@ void scrollScreenUp() {
 void scrollScreenDown() {
     for (int y = VGA_HEIGHT - 2; y >= 0; --y) {
         for (int x = 0; x < VGA_WIDTH; ++x) {
-            unsigned short srcPos = posFromCoords(x, y);
-            unsigned short destPos = posFromCoords(x, y + 1);
+            uint16_t srcPos = posFromCoords(x, y);
+            uint16_t destPos = posFromCoords(x, y + 1);
             *(VGA_MEMORY + destPos * 2) = *(VGA_MEMORY + srcPos * 2);
             *(VGA_MEMORY + destPos * 2 + 1) = *(VGA_MEMORY + srcPos * 2 + 1);
         }
     }
 
-    unsigned short firstRowPos = posFromCoords(0, 0);
+    uint16_t firstRowPos = posFromCoords(0, 0);
     for (int x = 0; x < VGA_WIDTH; ++x) {
         *(VGA_MEMORY + firstRowPos * 2) = ' ';
         *(VGA_MEMORY + firstRowPos * 2 + 1) = DEFUALT_COLOR;
@@ -63,16 +73,8 @@ void clearScreen(uint64_t ClearColor = DEFUALT_COLOR)
     for (uint64_t* i = (uint64_t*)VGA_MEMORY; i < (uint64_t*)(VGA_MEMORY + 4000); i++){
         *i = value;
     }
-}
 
-
-void setCursorPos(uint16_t newPos){
-    outb(CRT_CONTROLLER_PORT, 0x0F);
-    outb(CRT_CONTROLLER_PORT + 1, (uint8_t)(newPos & 0xFF));
-    outb(CRT_CONTROLLER_PORT, 0x0E);
-    outb(CRT_CONTROLLER_PORT + 1, (uint8_t)((newPos >> 8) & 0xFF));
-
-    cursorPos = newPos;
+    setCursorPos(0);
 }
 
 void printString(const char* string, uint8_t color = DEFUALT_COLOR)

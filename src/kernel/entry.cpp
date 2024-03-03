@@ -7,7 +7,6 @@ void Run() { }
 
 extern "C" void _start() {
     clearScreen();
-    setCursorPos(0);
     printString("Welcome from BlackOS!\r\n");
     printString("> ");
     lastPrint = cursorPos;
