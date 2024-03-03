@@ -6,12 +6,6 @@ $(PHONY): all
 
 all: always bootloader makeimg run clean
 
-setup:
-	sudo apt update
-	sudo apt install nasm -y
-	sudo apt install qemu-system-x86 -y
-	sudo apt install genisoimage -y
-
 always:
 	mkdir -p $(BUILD)
 
