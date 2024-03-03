@@ -1,3 +1,5 @@
+chmod 1777 /tmp
+rm -rf /tmp/src
 sudo apt update
 sudo apt install make -y
 sudo apt install nasm -y
@@ -13,7 +15,7 @@ sudo apt install texinfo -y
 export PREFIX="/usr/local/x86_64elfgcc"
 export TARGET=x86_64-elf
 export PATH="$PREFIX/bin:$PATH"
-mkdir -p /tmp/src
+mkdir /tmp/src
 cd /tmp/src
 curl -O http://ftp.gnu.org/gnu/binutils/binutils-2.35.1.tar.gz
 tar xf binutils-2.35.1.tar.gz
