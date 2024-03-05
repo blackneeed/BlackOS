@@ -1,7 +1,7 @@
 #pragma once
 
-#include "IO.cpp"
-#include "../Typedefs.hpp"
+#include "../IO.cpp"
+#include "../../Typedefs.hpp"
 
 void E9_WriteChar(uint8_t character) {
     outb(0xE9, character);

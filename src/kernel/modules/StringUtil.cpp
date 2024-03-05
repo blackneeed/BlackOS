@@ -6,10 +6,10 @@ int strcmp(const char* str1, const char* str2) {
         ++str1;
         ++str2;
     }
-    return *(const unsigned char*)str1 - *(const unsigned char*)str2;
+    return *(const unsigned char*)str1 - *(const unsigned char*)str2 == 0;
 }
 
-void splitString(char* str, char delimiter, char** tokens, uint32_t maxTokens) {
+uint32_t splitString(char* str, char delimiter, char** tokens, uint32_t maxTokens) {
     uint32_t tokenCount = 0;
     char* token = (char*)str;
 
@@ -29,6 +29,8 @@ void splitString(char* str, char delimiter, char** tokens, uint32_t maxTokens) {
     if (tokenCount < maxTokens) {
         tokens[tokenCount] = NULL;
     }
+
+    return tokenCount;
 }
 
 char* toLower(char* str) {

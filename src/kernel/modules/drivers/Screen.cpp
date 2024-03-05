@@ -5,7 +5,7 @@
 #include "../TextColors.hpp"
 
 uint16_t cursorPos;
-uint8_t DEFUALT_COLOR = BG_BLACK | FG_RED;
+uint8_t DEFAULT_COLOR = BG_BLACK | FG_RED;
 
 #define VGA_MEMORY (uint8_t*)0xb8000
 #define VGA_WIDTH 80
@@ -39,7 +39,7 @@ void scrollScreenUp() {
     uint16_t lastRowPos = posFromCoords(0, VGA_HEIGHT - 1);
     for (int x = 0; x < VGA_WIDTH; ++x) {
         *(VGA_MEMORY + lastRowPos * 2) = ' ';
-        *(VGA_MEMORY + lastRowPos * 2 + 1) = DEFUALT_COLOR;
+        *(VGA_MEMORY + lastRowPos * 2 + 1) = DEFAULT_COLOR;
         ++lastRowPos;
     }
 }
@@ -57,12 +57,12 @@ void scrollScreenDown() {
     uint16_t firstRowPos = posFromCoords(0, 0);
     for (int x = 0; x < VGA_WIDTH; ++x) {
         *(VGA_MEMORY + firstRowPos * 2) = ' ';
-        *(VGA_MEMORY + firstRowPos * 2 + 1) = DEFUALT_COLOR;
+        *(VGA_MEMORY + firstRowPos * 2 + 1) = DEFAULT_COLOR;
         ++firstRowPos;
     }
 }
 
-void clearScreen(uint64_t ClearColor = DEFUALT_COLOR)
+void clearScreen(uint64_t ClearColor = DEFAULT_COLOR)
 {
     uint64_t value = 0;
     value += ClearColor << 8;
@@ -77,7 +77,7 @@ void clearScreen(uint64_t ClearColor = DEFUALT_COLOR)
     setCursorPos(0);
 }
 
-void printString(const char* string, uint8_t color = DEFUALT_COLOR)
+void printString(const char* string, uint8_t color = DEFAULT_COLOR)
 {
     uint16_t index = cursorPos;
     for (size_t i = 0; string[i] != '\0'; i++) {
@@ -105,14 +105,14 @@ void printString(const char* string, uint8_t color = DEFUALT_COLOR)
     setCursorPos(index);
 }
 
-void printChar(char character, uint8_t color = DEFUALT_COLOR)
+void printChar(char character, uint8_t color = DEFAULT_COLOR)
 {
     *(VGA_MEMORY + cursorPos * 2) = character;
     *(VGA_MEMORY + cursorPos * 2 + 1) = color;
     setCursorPos(cursorPos + 1);
 }
 
-void deleteChar(uint8_t color = DEFUALT_COLOR) {
+void deleteChar(uint8_t color = DEFAULT_COLOR) {
     if (cursorPos > 0) {
         setCursorPos(cursorPos - 1);
         printChar(' ');

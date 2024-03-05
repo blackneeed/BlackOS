@@ -1,47 +1,33 @@
+#pragma once
 #include "StringUtil.cpp"
-#include "drivers/Screen.cpp"
+#include "commands/cls.cpp"
+#include "commands/help.cpp"
+#include "commands/echo.cpp"
+#include "commands/version.cpp"
+#include "commands/unknown.cpp"
 
 extern char commandBuffer[];
 extern uint8_t commandLength;
+#define MAX_COMMAND_ARGS 12 // Not counting the name
 
-void versionCommand(char* command_parts[]) {
-    printString("*********************************************\r\n");
-    printString("*********************************************\r\n");
-    printString("****************    BlackOS    **************\r\n");
-    printString("******************** 1.0.0 ******************\r\n");
-    printString("*********************alpha*******************\r\n");
-    printString("*********************************************");
-}
-
-void helpCommand(char* command_parts[]) {
-    printString("Commands:\r\n");
-    printString("- 'version'");
-}
-
-void clearScreenCommand(char* command_parts[]) {
-    clearScreen();
-}
-
-void unknownCommand(char* command_parts[]) {
-    printString("Unknown command '");
-    printString(command_parts[0]); // Print the one with orginal caps
-    printString("'!,\r\n");
-    printString("Type 'help' for help.");
+void callCommand(char* commandParts[], uint32_t tokenCount, const char* command) {
+    if (strcmp("cls", command))
+        clsCommand(commandParts, tokenCount);
+    else if (strcmp("help", command))
+        helpCommand(commandParts, tokenCount);
+    else if (strcmp("echo", command))
+        echoCommand(commandParts, tokenCount);
+    else if (strcmp("version", command))
+        versionCommand(commandParts, tokenCount);
+    else
+        unknownCommand(commandParts, tokenCount);
 }
 
 void executeCommand() {
     commandBuffer[commandLength] = '\0';
-    const char* command_all = (const char*)commandBuffer;
-    char* command_parts[4]; // Up to 4 arguments
-    splitString((char*)command_all, ' ', command_parts, 4);
-    const char* command = toLower(command_parts[0]);
-    if (strcmp(command, "version") == 0) {
-        versionCommand(command_parts);
-    } else if (strcmp(command, "help") == 0) {
-        helpCommand(command_parts);
-    } else if (strcmp(command, "cls") == 0) {
-        clearScreenCommand(command_parts);
-    } else {
-        unknownCommand(command_parts);
-    }
+    const char* commandAll = (const char*)commandBuffer;
+    char* commandParts[MAX_COMMAND_ARGS + 1] = {}; // Command arguments + 1 (leaving space for name)
+    uint32_t tokenCount = splitString((char*)commandAll, ' ', commandParts, MAX_COMMAND_ARGS + 1);
+    const char* command = toLower(commandParts[0]);
+    callCommand(commandParts, tokenCount, command);
 }

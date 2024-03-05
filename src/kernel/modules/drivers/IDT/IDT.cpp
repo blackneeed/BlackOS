@@ -3,6 +3,7 @@
 #include "../../StringUtil.cpp"
 #include "../IO.cpp"
 #include "../Screen.cpp"
+#include "../debug/E9.cpp"
 #include "../keyboard/Keyboard.cpp"
 #include "../keyboard/Keymap.cpp" // KB sets
 #include "../keyboard/Keys.hpp" // All constants for scancodes
@@ -58,27 +59,45 @@ extern "C" void isr1_handler()
             handleBackspace();
             break;
 
+        case TAB:
+            handleTab();
+            break;
+
         case CAPS:
+            E9_WriteString("Caps lock pressed\r\n");
             capsLockPressed = !capsLockPressed;
             break;
 
         case LEFTSHIFT:
+            E9_WriteString("LSHIFT pressed\r\n");
 			leftShiftPressed = true;
 			break;
+
 		case LEFTSHIFTRELEASE:
-			leftShiftPressed = false;
+			E9_WriteString("LSHIFT released\r\n");
+            leftShiftPressed = false;
             break;
+        
 		case RIGHTSHIFT:
+			E9_WriteString("RSHIFT pressed\r\n");
 			rightShiftPressed = true;
 			break;
 		case RIGHTSHIFTRELEASE:
+			E9_WriteString("RSHIFT released\r\n");
 			rightShiftPressed = false;
 			break;
+
 
         default:
             if (scanCode < 0x3A)
             {
-                if (capsLockPressed | leftShiftPressed | rightShiftPressed) {
+                if (leftShiftPressed | rightShiftPressed) {
+                    if (!capsLockPressed) {
+                        handleCharacter(charToUpper(KBset1::ScanCodeLookupTableShift[scanCode]));
+                    } else {
+                        handleCharacter(charToLower(KBset1::ScanCodeLookupTableShift[scanCode]));
+                    }
+                } else if (capsLockPressed) {
                     handleCharacter(charToUpper(KBset1::ScanCodeLookupTable[scanCode]));
                 } else {
                     handleCharacter(charToLower(KBset1::ScanCodeLookupTable[scanCode]));

@@ -3,7 +3,7 @@
 
 uint16_t lastPrint;
 
-void Run() { }
+void loop() { }
 
 extern "C" void _start() {
     clearScreen();
@@ -11,6 +11,6 @@ extern "C" void _start() {
     printString("> ");
     lastPrint = cursorPos;
     InitializeIDT();
-    while (true) { Run(); }
+    while (true) { loop(); }
     return;
 }

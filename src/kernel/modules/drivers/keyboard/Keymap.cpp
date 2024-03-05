@@ -1,3 +1,4 @@
+#pragma once
 namespace KBset1
 {
     const char ScanCodeLookupTable[] =
@@ -16,6 +17,27 @@ namespace KBset1
         'z', 'x', 'c', 'v',
         'b', 'n', 'm', ',',
         '.', '/', 0, '*',
+        0, ' ', 0, 0,  // Left Alt, Left Shift, Left Control
+        0, 0, 0, 0,    // Right Alt, Right Shift, Right Control, Function keys
+        0, 0, 0, 0,    // Function keys continued
+        0, 0, 0        // Function keys continued
+    };
+    const char ScanCodeLookupTableShift[] =
+    {
+        0, 0, '!', '@',
+        '#', '$', '%', '^',
+        '&', '*', '(', ')',
+        '_', '+', 0, 0,
+        'q', 'w', 'e', 'r',
+        't', 'y', 'u', 'i',
+        'o', 'p', '{', '}',
+        0, 0, 'a', 's',
+        'd', 'f', 'g', 'h',
+        'j', 'k', 'l', ':',
+        '"', '`', 0, '|',
+        'z', 'x', 'c', 'v',
+        'b', 'n', 'm', '<',
+        '>', '?', 0, '*',
         0, ' ', 0, 0,  // Left Alt, Left Shift, Left Control
         0, 0, 0, 0,    // Right Alt, Right Shift, Right Control, Function keys
         0, 0, 0, 0,    // Function keys continued
