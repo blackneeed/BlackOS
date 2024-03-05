@@ -1,6 +1,5 @@
-ASM=nasm
-SRC?=src
-BUILD?=build
+SRC=src
+BUILD=build
 
 $(PHONY): all
 
@@ -25,7 +24,7 @@ makeimg: bootloader kernel
 	truncate -s 1200k $(BUILD)/BlackOSBuild.bin
 	genisoimage -b $(BUILD)/BlackOSBuild.bin -o $(BUILD)/BlackOSBuild.iso -input-charset utf-8 ./
 
-run: makeimg
+run:
 	qemu-system-x86_64 -cdrom $(BUILD)/BlackOSBuild.iso -boot d -monitor stdio -d guest_errors,cpu_reset -debugcon file:/dev/stdout 
 
 clean:
