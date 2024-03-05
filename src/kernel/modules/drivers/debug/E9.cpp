@@ -1,5 +1,4 @@
 #pragma once
-
 #include "../IO.cpp"
 #include "../../Typedefs.hpp"
 

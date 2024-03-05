@@ -1,4 +1,5 @@
 #pragma once
+#include "StringUtil.cpp"
 #define LOOKUP_BG 0
 #define LOOKUP_FG 1
 #define LOOKUP_UNKNOWN 128

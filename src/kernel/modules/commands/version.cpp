@@ -1,5 +1,6 @@
 #pragma once
 #include "../drivers/Screen.cpp"
+#include "../Typedefs.hpp"
 
 void versionCommand(char* commandParts[], uint32_t tokenCount) {
     printString("*********************************************\r\n");

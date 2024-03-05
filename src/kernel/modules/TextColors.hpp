@@ -1,5 +1,4 @@
 #pragma once
-
 #define FG_BLACK 0x00 // "0"
 #define FG_BLUE 0x01 // "1"
 #define FG_GREEN 0x02 // "2"
