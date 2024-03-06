@@ -18,10 +18,10 @@ void GUILoop() { }
 
 extern "C" void _start() {
     clearScreen();
+    InitializeIDT();
     if (MODE == CLI) CLIInit();
     else if (MODE == GUI) GUIInit();
     else {}
-    InitializeIDT();
     while (true) {
         if (MODE == CLI) CLILoop();
         else if (MODE == GUI) GUILoop();
