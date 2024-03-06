@@ -1,53 +1,22 @@
 #pragma once
+#include "../../commands.cpp"
 #include "../Screen.cpp"
 #include "../../Typedefs.hpp"
-#include "../../commands.cpp"
 #include "../debug/E9.cpp"
 #include "Keymap.cpp"
 #include "Keys.hpp"
+#include "CLIKeyboard.cpp"
+#include "GUIKeyboard.cpp"
 
-#define MAX_COMMAND_LENGTH 128
-#define TAB_WIDTH 4
-extern uint16_t lastPrint;
-uint8_t commandLength;
-char commandBuffer[MAX_COMMAND_LENGTH];
+extern uint8_t MODE;
 bool capsLockPressed = false;
 bool leftShiftPressed = false;
 bool rightShiftPressed = false;
 
 void handleCharacter(char chr) {
-    E9_WriteString("Character '");
-    E9_WriteChar(chr);
-    E9_WriteString("' pressed!\r\n");
-    printChar(chr);
-    if (commandLength < MAX_COMMAND_LENGTH - 1) {
-        commandBuffer[commandLength++] = chr;
-    }
-}
-
-void handleTab() {
-    E9_WriteString("Tab pressed!\r\n");
-    for (uint8_t i = 0; i < TAB_WIDTH; i++) {
-        printChar(' ');
-    }
-}
-
-void handleBackspace() {
-    E9_WriteString("Backspace pressed!\r\n");
-    if (cursorPos > lastPrint) {
-        deleteChar();
-        commandLength--;
-        commandBuffer[commandLength] = '\0';
-    }
-}
-
-void handleEnter() {
-    E9_WriteString("Enter pressed!\r\n");
-    printString("\r\n");
-    executeCommand();
-    commandLength = 0;
-    printString("> ");
-    lastPrint = cursorPos;
+    if (MODE == CLI) CLIHandleCharacter(chr);
+    else if (MODE == GUI) GUIHandleCharacter(chr);
+    else {}
 }
 
 extern "C" void isr1_handler()
@@ -55,15 +24,21 @@ extern "C" void isr1_handler()
     uint8_t scanCode = inb(0x60);
     switch (scanCode) {
         case ENTER:
-            handleEnter();
+            if (MODE == CLI) CLIHandleEnter();
+            else if (MODE == GUI) GUIHandleEnter();
+            else {}
             break;
 
         case BACKSPACE:
-            handleBackspace();
+            if (MODE == CLI) CLIHandleBackspace();
+            else if (MODE == GUI) GUIHandleBackspace();
+            else {}
             break;
 
         case TAB:
-            handleTab();
+            if (MODE == CLI) CLIHandleTab();
+            else if (MODE == GUI) GUIHandleTab();
+            else {}
             break;
 
         case CAPS:
