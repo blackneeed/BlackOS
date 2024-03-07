@@ -2,30 +2,19 @@
 #include "modules/drivers/IDT/IDT.cpp"
 #include "modules/Typedefs.hpp"
 
-uint8_t MODE = CLI;
-
 uint16_t lastPrint;
 
-void CLIInit() {
+void init() {
     printString("Welcome from BlackOS!\r\n");
     printString("> ");
     lastPrint = cursorPos;
 }
-void CLILoop() { }
-
-void GUIInit() { }
-void GUILoop() { }
+void loop() { }
 
 extern "C" void _start() {
     clearScreen();
-    InitializeIDT();
-    if (MODE == CLI) CLIInit();
-    else if (MODE == GUI) GUIInit();
-    else {}
-    while (true) {
-        if (MODE == CLI) CLILoop();
-        else if (MODE == GUI) GUILoop();
-        else {}
-    }
+    initializeIDT();
+    init();
+    while (true) { loop(); }
     return;
 }

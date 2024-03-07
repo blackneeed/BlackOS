@@ -5,18 +5,49 @@
 #include "../debug/E9.cpp"
 #include "Keymap.cpp"
 #include "Keys.hpp"
-#include "CLIKeyboard.cpp"
-#include "GUIKeyboard.cpp"
 
-extern uint8_t MODE;
+#define MAX_COMMAND_LENGTH 128
+#define TAB_WIDTH 4
+extern uint16_t lastPrint;
+char commandBuffer[MAX_COMMAND_LENGTH];
+uint8_t commandLength;
 bool capsLockPressed = false;
 bool leftShiftPressed = false;
 bool rightShiftPressed = false;
 
 void handleCharacter(char chr) {
-    if (MODE == CLI) CLIHandleCharacter(chr);
-    else if (MODE == GUI) GUIHandleCharacter(chr);
-    else {}
+    E9_WriteString("Character '");
+    E9_WriteChar(chr);
+    E9_WriteString("' pressed!\r\n");
+    printChar(chr);
+    if (commandLength < MAX_COMMAND_LENGTH - 1) {
+        commandBuffer[commandLength++] = chr;
+    }
+}
+
+void handleTab() {
+    E9_WriteString("Tab pressed!\r\n");
+    for (uint8_t i = 0; i < TAB_WIDTH; i++) {
+        printChar(' ');
+    }
+}
+
+void handleBackspace() {
+    E9_WriteString("Backspace pressed!\r\n");
+    if (cursorPos > lastPrint) {
+        deleteChar();
+        commandLength--;
+        commandBuffer[commandLength] = '\0';
+    }
+}
+
+void handleEnter() {
+    E9_WriteString("Enter pressed!\r\n");
+    printString("\r\n");
+    executeCommand();
+    commandLength = 0;
+    printString("> ");
+    lastPrint = cursorPos;
 }
 
 extern "C" void isr1_handler()
@@ -24,21 +55,15 @@ extern "C" void isr1_handler()
     uint8_t scanCode = inb(0x60);
     switch (scanCode) {
         case ENTER:
-            if (MODE == CLI) CLIHandleEnter();
-            else if (MODE == GUI) GUIHandleEnter();
-            else {}
+            handleEnter();
             break;
 
         case BACKSPACE:
-            if (MODE == CLI) CLIHandleBackspace();
-            else if (MODE == GUI) GUIHandleBackspace();
-            else {}
+            handleBackspace();
             break;
 
         case TAB:
-            if (MODE == CLI) CLIHandleTab();
-            else if (MODE == GUI) GUIHandleTab();
-            else {}
+            handleTab();
             break;
 
         case CAPS:

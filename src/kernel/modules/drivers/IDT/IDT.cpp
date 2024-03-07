@@ -18,7 +18,7 @@ extern IDT64 _idt[256];
 extern uint64_t isr1;
 extern "C" void LoadIDT();
 
-void InitializeIDT()
+void initializeIDT()
 {
 
     _idt[1].zero = 0;
