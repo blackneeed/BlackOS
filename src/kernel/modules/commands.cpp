@@ -24,6 +24,7 @@ void callCommand(char* commandParts[], uint32_t tokenCount, const char* command)
 }
 
 void executeCommand() {
+    bool foundCommand = false;
     commandBuffer[commandLength] = '\0';
     const char* commandAll = (const char*)commandBuffer;
     char* commandParts[MAX_COMMAND_ARGS + 1] = {}; // Command arguments + 1 (leaving space for name)
