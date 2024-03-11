@@ -85,3 +85,39 @@ bool isSpace(const char* str) {
     }
     return true;
 } 
+
+bool startsWith(const char* str, const char* prefix) {
+    if (str == nullptr || prefix == nullptr)
+        return false;
+
+    while (*prefix != '\0') {
+        if (*str != *prefix)
+            return false;
+        str++;
+        prefix++;
+    }
+
+    return true;
+}
+
+bool endsWith(const char* str, const char* suffix) {
+    if (str == nullptr || suffix == nullptr)
+        return false;
+
+    size_t str_len = getLength(str);
+    size_t suffix_len = getLength(suffix);
+
+    if (suffix_len > str_len)
+        return false;
+
+    str -= suffix_len;
+
+    while (*suffix != '\0') {
+        if (*str != *suffix)
+            return false;
+        str++;
+        suffix++;
+    }
+
+    return true;
+}
