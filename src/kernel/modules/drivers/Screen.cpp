@@ -79,6 +79,17 @@ void printChar(char character, uint8_t color = DEFAULT_COLOR)
         case '\r':
             cursorPos -= cursorPos % VGA_WIDTH;
             break;
+        case '\t':
+            for (int i = 0; i < TAB_WIDTH; i++) {
+                if (cursorPos >= VGA_WIDTH * VGA_HEIGHT) {
+                    scrollScreenUp();
+                    cursorPos -= VGA_WIDTH;
+                }
+                *(VGA_MEMORY + cursorPos * 2) = ' ';
+                *(VGA_MEMORY + cursorPos * 2 + 1) = color;
+                cursorPos++;
+            }
+            break;
         default:
             if (cursorPos >= VGA_WIDTH * VGA_HEIGHT) {
                 scrollScreenUp();
@@ -87,6 +98,7 @@ void printChar(char character, uint8_t color = DEFAULT_COLOR)
             *(VGA_MEMORY + cursorPos * 2) = character;
             *(VGA_MEMORY + cursorPos * 2 + 1) = color;
             cursorPos++;
+            break;
     }
     setCursorPos(cursorPos);
 }

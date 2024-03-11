@@ -4,8 +4,8 @@
 #include "Keys.hpp"
 #include "Keymap.hpp"
 #include "../debug/E9.cpp"
+#include "../Screen.cpp"
 
-#define TAB_WIDTH 4
 #define MAX_COMMAND_LENGTH 128
 char commandBuffer[MAX_COMMAND_LENGTH];
 uint8_t commandLength;

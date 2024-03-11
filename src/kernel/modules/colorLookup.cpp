@@ -1,8 +1,8 @@
 #pragma once
 #include "StringUtil.cpp"
+#include "LookupUtil.cpp"
 #define LOOKUP_BG 0
 #define LOOKUP_FG 1
-#define LOOKUP_UNKNOWN 128
 
 uint8_t getColor(char c, int mode) {
   if (mode == LOOKUP_BG) {

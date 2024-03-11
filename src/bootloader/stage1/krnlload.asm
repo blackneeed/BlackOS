@@ -3,7 +3,7 @@
 [org 0x7c00]
 [bits 16]
 
-%define SectorsToRead 64
+%define SectorsToRead 128
 %define LoadKernelTo 0x8000
 %define KernelStartSector 0x02
 %define EndOfLine 0x0A, 0x0D
