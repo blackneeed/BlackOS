@@ -29,5 +29,8 @@ void executeCommand() {
     char* commandParts[MAX_COMMAND_ARGS + 1] = {}; // Command arguments + 1 (leaving space for name)
     uint32_t tokenCount = splitString((char*)commandAll, ' ', commandParts, MAX_COMMAND_ARGS + 1);
     const char* command = toLower(commandParts[0]);
+    if (isSpace(command)) {
+        return;
+    }
     callCommand(commandParts, tokenCount, command);
 }

@@ -69,3 +69,19 @@ uint8_t getLength(const char* str) {
     }
     return length;
 }
+
+bool isCharSpace(char chr) {
+    return (chr == ' ' || chr == '\t' || chr == '\n' || chr == '\r' || chr == '\v' || chr == '\f' || chr == '\0');
+}
+
+bool isSpace(const char* str) {
+    if (str == nullptr)
+        return true;
+
+    while (*str != '\0') {
+        if (!isCharSpace(*str))
+            return false;
+        str++;
+    }
+    return true;
+} 

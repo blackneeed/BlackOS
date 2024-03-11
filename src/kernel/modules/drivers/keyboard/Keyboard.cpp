@@ -24,9 +24,7 @@ void handleCharacter(char chr) {
 
 void handleTab() {
     E9_WriteString("Tab pressed!\r\n");
-    for (uint8_t i = 0; i < TAB_WIDTH; i++) {
-        printChar(' ');
-    }
+    printChar('\t');
 }
 
 void handleBackspace() {
