@@ -6,7 +6,7 @@
 
 // Settings
 uint16_t cursorPos;
-uint8_t DEFAULT_COLOR = BG_BLACK | FG_RED;
+uint8_t DEFAULT_COLOR = BG_BLACK | FG_WHITE;
 #define VGA_MEMORY (uint8_t*)0xb8000
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
@@ -126,6 +126,12 @@ void clearScreen(uint64_t color = DEFAULT_COLOR)
     }
 
     setCursorPos(0);
+}
+
+void setColor(uint64_t color = DEFAULT_COLOR) {
+    for (uint16_t pos = 0; pos < VGA_WIDTH * VGA_HEIGHT; pos++) {
+        *(VGA_MEMORY + pos * 2 + 1) = color;
+    }
 }
 
 void deleteChar(uint8_t color = DEFAULT_COLOR) {

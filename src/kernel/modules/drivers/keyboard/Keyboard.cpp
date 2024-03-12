@@ -45,7 +45,6 @@ void handleEnter() {
     lastPrint = cursorPos;
 }
 
-
 extern "C" void isr1_handler()
 {
     uint8_t scanCode = inb(0x60);

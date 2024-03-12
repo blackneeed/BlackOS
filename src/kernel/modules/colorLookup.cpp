@@ -49,3 +49,14 @@ uint8_t getColor(char c, int mode) {
     return LOOKUP_UNKNOWN;
   }
 }
+
+
+const char* colorHelpLookup(char* colorMode) {
+    if (strcmp(colorMode, "fg")) {
+        return "0: Black\r\n1: Blue\r\n2: Green\r\n3: Cyan\r\n4: Red\r\n5: Magenta\r\n6: Brown\r\n7: Light Gray\r\n8: Dark Gray\r\n9: Light Blue\r\nA: Light Green\r\nB: Light Cyan\r\nC: Light Red\r\nD: Light Magenta\r\nE: Yellow\r\nF: White";
+    } else if (strcmp(colorMode, "bg")) {
+        return "0: Black\r\n1: Blue\r\n2: Green\r\n3: Cyan\r\n4: Red\r\n5: Magenta\r\n6: Brown\r\n7: Light Gray\r\n8: Blinking Black\r\n9: Blinking Blue\r\nA: Blinking Green\r\nB: Blinking Cyan\r\nC: Blinking Red\r\nD: Blinking Magenta\r\nE: Blinking Yellow\r\nF: Blinking White";
+    } else {
+        return LOOKUP_UNKNOWN;
+    }
+}

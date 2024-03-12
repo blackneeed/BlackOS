@@ -6,7 +6,7 @@
 
 extern uint8_t DEFAULT_COLOR; // ../drivers/Screen.cpp
 
-void clsCommand(char* commandParts[], uint32_t tokenCount) {
+void colorCommand(char* commandParts[], uint32_t tokenCount) {
     if (tokenCount < 2) {
         clearScreen();
         return;
@@ -14,7 +14,7 @@ void clsCommand(char* commandParts[], uint32_t tokenCount) {
 
     if (strcmp(commandParts[1], "?")) {
         if (tokenCount < 3) {
-            printString("Syntax: cls ? <color type>\r\nColor types\r\n'fg': foreground\r\n'bg': background\r\n");
+            printString("Syntax: color ? <color type>\r\nColor types\r\n'fg': foreground\r\n'bg': background\r\n");
             return;
         }
         const char* colorHelp = colorHelpLookup(commandParts[2]);
@@ -27,8 +27,8 @@ void clsCommand(char* commandParts[], uint32_t tokenCount) {
     } else {
         const char* color = commandParts[1];
         if (getLength(color) != 2) {
-            printString("Syntax: cls <color>\r\n");
-            printString("Type 'cls ?' for more information.\r\n");
+            printString("Syntax: color <color>\r\n");
+            printString("Type 'color ?' for more information.\r\n");
             return;
         }
 
@@ -40,7 +40,7 @@ void clsCommand(char* commandParts[], uint32_t tokenCount) {
             return;
         }
 
+        setColor(bg | fg);
         DEFAULT_COLOR = bg | fg;
-        clearScreen();
     }
 }
