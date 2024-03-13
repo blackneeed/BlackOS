@@ -36,7 +36,8 @@ void clsCommand(char* commandParts[], uint32_t tokenCount) {
         const uint8_t fg = getColor(color[1], LOOKUP_FG);
 
         if (bg == LOOKUP_UNKNOWN || fg == LOOKUP_UNKNOWN) {
-            printString("Invalid color string!\r\n");
+            printString("Syntax: cls <color>\r\n");
+            printString("Type 'cls ?' for more information.\r\n");
             return;
         }
 

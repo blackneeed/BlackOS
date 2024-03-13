@@ -7,49 +7,48 @@
 uint8_t getColor(char c, int mode) {
   if (mode == LOOKUP_BG) {
     switch (charToUpper(c)) {
-      case '0': return BG_BLACK;
-      case '1': return BG_BLUE;
-      case '2': return BG_GREEN;
-      case '3': return BG_CYAN;
-      case '4': return BG_RED;
-      case '5': return BG_MAGENTA;
-      case '6': return BG_BROWN;
-      case '7': return BG_LIGHTGRAY;
-      case '8': return BG_BLINKINGBLACK;
-      case '9': return BG_BLINKINGBLUE;
-      case 'A': return BG_BLINKINGGREEN;
-      case 'B': return BG_BLINKINGCYAN;
-      case 'C': return BG_BLINKINGRED;
-      case 'D': return BG_BLINKINGMAGENTA;
-      case 'E': return BG_BLINKINGYELLOW;
-      case 'F': return BG_BLINKINGWHITE;
-      default: return LOOKUP_UNKNOWN;
+      case '0': return BG_BLACK; break;
+      case '1': return BG_BLUE; break;
+      case '2': return BG_GREEN; break;
+      case '3': return BG_CYAN; break;
+      case '4': return BG_RED; break;
+      case '5': return BG_MAGENTA; break;
+      case '6': return BG_BROWN; break;
+      case '7': return BG_LIGHTGRAY; break;
+      case '8': return BG_BLINKINGBLACK; break;
+      case '9': return BG_BLINKINGBLUE; break;
+      case 'A': return BG_BLINKINGGREEN; break;
+      case 'B': return BG_BLINKINGCYAN; break;
+      case 'C': return BG_BLINKINGRED; break;
+      case 'D': return BG_BLINKINGMAGENTA; break;
+      case 'E': return BG_BLINKINGYELLOW; break;
+      case 'F': return BG_BLINKINGWHITE; break;
+      default: return LOOKUP_UNKNOWN; break;
     }
   } else if (mode == LOOKUP_FG) {
     switch (charToUpper(c)) { 
-      case '0': return FG_BLACK;
-      case '1': return FG_BLUE;
-      case '2': return FG_GREEN;
-      case '3': return FG_CYAN;
-      case '4': return FG_RED;
-      case '5': return FG_MAGENTA;
-      case '6': return FG_BROWN;
-      case '7': return FG_LIGHTGRAY;
-      case '8': return FG_DARKGRAY;
-      case '9': return FG_LIGHTBLUE;
-      case 'A': return FG_LIGHTGREEN;
-      case 'B': return FG_LIGHTCYAN;
-      case 'C': return FG_LIGHTRED;
-      case 'D': return FG_LIGHTMAGENTA;
-      case 'E': return FG_YELLOW;
-      case 'F': return FG_WHITE;
-      default: return LOOKUP_UNKNOWN;
+      case '0': return FG_BLACK; break;
+      case '1': return FG_BLUE; break;
+      case '2': return FG_GREEN; break;
+      case '3': return FG_CYAN; break;
+      case '4': return FG_RED; break;
+      case '5': return FG_MAGENTA; break;
+      case '6': return FG_BROWN; break;
+      case '7': return FG_LIGHTGRAY; break;
+      case '8': return FG_DARKGRAY; break;
+      case '9': return FG_LIGHTBLUE; break;
+      case 'A': return FG_LIGHTGREEN; break;
+      case 'B': return FG_LIGHTCYAN; break;
+      case 'C': return FG_LIGHTRED; break;
+      case 'D': return FG_LIGHTMAGENTA; break;
+      case 'E': return FG_YELLOW; break;
+      case 'F': return FG_WHITE; break;
+      default: return LOOKUP_UNKNOWN; break;
     }
   } else {
     return LOOKUP_UNKNOWN;
   }
 }
-
 
 const char* colorHelpLookup(char* colorMode) {
     if (strcmp(colorMode, "fg")) {

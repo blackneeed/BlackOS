@@ -36,7 +36,8 @@ void colorCommand(char* commandParts[], uint32_t tokenCount) {
         const uint8_t fg = getColor(color[1], LOOKUP_FG);
 
         if (bg == LOOKUP_UNKNOWN || fg == LOOKUP_UNKNOWN) {
-            printString("Invalid color string!\r\n");
+            printString("Syntax: color <color>\r\n");
+            printString("Type 'color ?' for more information.\r\n");
             return;
         }
 
