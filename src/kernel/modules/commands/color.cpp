@@ -4,7 +4,7 @@
 #include "../../std/stdcolor.cpp"
 #include "../../std/stdstring.cpp"
 
-extern uint8_t DEFAULT_COLOR; // ../drivers/Screen.cpp
+extern uint8_t color; // ../drivers/Screen.cpp
 
 void colorCommand(char* commandParts[], uint32_t tokenCount) {
     if (tokenCount < 2) {
@@ -25,15 +25,15 @@ void colorCommand(char* commandParts[], uint32_t tokenCount) {
         printString(colorHelp);
         printString("\r\n");
     } else {
-        const char* color = commandParts[1];
-        if (getLength(color) != 2) {
+        const char* colorString = commandParts[1];
+        if (getLength(colorString) != 2) {
             printString("Syntax: color <color>\r\n");
             printString("Type 'color ?' for more information.\r\n");
             return;
         }
 
-        const uint8_t bg = getColor(color[0], LOOKUP_BG);
-        const uint8_t fg = getColor(color[1], LOOKUP_FG);
+        const uint8_t bg = getColor(colorString[0], LOOKUP_BG);
+        const uint8_t fg = getColor(colorString[1], LOOKUP_FG);
 
         if (bg == LOOKUP_UNKNOWN || fg == LOOKUP_UNKNOWN) {
             printString("Syntax: color <color>\r\n");
@@ -42,6 +42,6 @@ void colorCommand(char* commandParts[], uint32_t tokenCount) {
         }
 
         setColor(bg | fg);
-        DEFAULT_COLOR = bg | fg;
+        color = bg | fg;
     }
 }

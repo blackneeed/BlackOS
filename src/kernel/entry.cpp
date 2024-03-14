@@ -1,11 +1,14 @@
 #include "std/stdio.cpp"
 #include "modules/IDT/IDT.cpp"
 #include "std/stdlib.hpp"
+#include "sys/config.hpp"
 
 uint16_t lastPrint;
 
 void init() {
-    printString("Welcome from BlackOS!\r\n");
+    printString("Welcome from ");
+    printString(OSNAME);
+    printString("!\r\n");
     printString("> ");
     lastPrint = cursorPos;
 }
