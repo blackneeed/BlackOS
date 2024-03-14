@@ -6,7 +6,7 @@
 <hr/>
 
 ### To build the toolchain run this:
-- ```$ bash -x build.sh```
+- ```$ bash -x debian-build.sh```
 
 <hr/>
 
