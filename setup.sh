@@ -1,5 +1,5 @@
-chmod 1777 /tmp
-rm -rf /tmp/src
+sudo chmod 1777 /tmp
+sudo rm -rf /tmp/src
 sudo apt update
 sudo apt install make -y
 sudo apt install nasm -y
