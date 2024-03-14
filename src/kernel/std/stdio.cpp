@@ -1,10 +1,23 @@
 #pragma once
 
-#include "IO.cpp"
-#include "../Typedefs.hpp"
-#include "../TextColors.hpp"
+#include "stdlib.hpp"
+#include "stdport.cpp"
+#include "stdcolor.hpp"
+
+// Debugging
+
+void E9_WriteChar(uint8_t character) {
+    outb(0xE9, character);
+}
+
+void E9_WriteString(const char* string) {
+    for (size_t i = 0; string[i] != '\0'; i++) {
+        E9_WriteChar(string[i]);
+    }
+}
 
 // Settings
+
 uint16_t cursorPos;
 uint8_t DEFAULT_COLOR = BG_BLACK | FG_WHITE;
 #define VGA_MEMORY (uint8_t*)0xb8000

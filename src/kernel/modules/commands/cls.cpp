@@ -1,8 +1,8 @@
 #pragma once
-#include "../Typedefs.hpp"
-#include "../drivers/Screen.cpp"
+#include "../../std/stdlib.hpp"
+#include "../../std/stdio.cpp"
 #include "../colorLookup.cpp"
-#include "../StringUtil.cpp"
+#include "../../std/stdstring.cpp"
 
 extern uint8_t DEFAULT_COLOR; // ../drivers/Screen.cpp
 

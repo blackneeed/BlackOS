@@ -1,6 +1,6 @@
 #pragma once
-#include "../Typedefs.hpp"
-#include "../drivers/Screen.cpp"
+#include "../../std/stdlib.hpp"
+#include "../../std/stdio.cpp"
 
 void echoCommand(char* commandParts[], uint32_t tokenCount) {
   for (size_t i = 0; i < tokenCount; i++) {

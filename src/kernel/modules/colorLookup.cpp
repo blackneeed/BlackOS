@@ -1,6 +1,6 @@
 #pragma once
-#include "StringUtil.cpp"
-#include "LookupUtil.cpp"
+#include "../std/stdstring.cpp"
+#include "lookup.cpp"
 #define LOOKUP_BG 0
 #define LOOKUP_FG 1
 

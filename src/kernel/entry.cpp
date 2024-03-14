@@ -1,6 +1,6 @@
-#include "modules/drivers/Screen.cpp"
-#include "modules/drivers/IDT/IDT.cpp"
-#include "modules/Typedefs.hpp"
+#include "std/stdio.cpp"
+#include "modules/IDT/IDT.cpp"
+#include "std/stdlib.hpp"
 
 uint16_t lastPrint;
 
@@ -11,7 +11,7 @@ void init() {
 }
 void loop() { }
 
-extern "C" void _start() {
+CNAME void _start() {
     clearScreen();
     initializeIDT();
     init();

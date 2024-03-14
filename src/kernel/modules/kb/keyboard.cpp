@@ -1,15 +1,13 @@
 #pragma once
-#include "../../commands.cpp"
-#include "../../Typedefs.hpp"
-#include "Keys.hpp"
-#include "Keymap.hpp"
-#include "../debug/E9.cpp"
-#include "../Screen.cpp"
+#include "../commands.cpp"
+#include "../../std/stdlib.hpp"
+#include "kbset1.hpp"
+#include "../../std/stdio.cpp"
 
 #define MAX_COMMAND_LENGTH 128
 char commandBuffer[MAX_COMMAND_LENGTH];
 uint8_t commandLength;
-extern uint16_t lastPrint;
+EXPORT uint16_t lastPrint;
 bool capsLockPressed, leftShiftPressed, rightShiftPressed = false;
 
 void handleCharacter(char chr) {
@@ -91,14 +89,14 @@ extern "C" void isr1_handler()
             {
                 if (leftShiftPressed | rightShiftPressed) {
                     if (!capsLockPressed) {
-                        handleCharacter(charToUpper(KBset1::ScanCodeLookupTableShift[scanCode]));
+                        handleCharacter(charToUpper(kbset1::ScanCodeLookupTableShift[scanCode]));
                     } else {
-                        handleCharacter(charToLower(KBset1::ScanCodeLookupTableShift[scanCode]));
+                        handleCharacter(charToLower(kbset1::ScanCodeLookupTableShift[scanCode]));
                     }
                 } else if (capsLockPressed) {
-                    handleCharacter(charToUpper(KBset1::ScanCodeLookupTable[scanCode]));
+                    handleCharacter(charToUpper(kbset1::ScanCodeLookupTable[scanCode]));
                 } else {
-                    handleCharacter(charToLower(KBset1::ScanCodeLookupTable[scanCode]));
+                    handleCharacter(charToLower(kbset1::ScanCodeLookupTable[scanCode]));
                 }
             }
             break;

@@ -1,5 +1,5 @@
 #pragma once
-#include "StringUtil.cpp"
+#include "../std/stdstring.cpp"
 #include "commands/cls.cpp"
 #include "commands/help.cpp"
 #include "commands/echo.cpp"
