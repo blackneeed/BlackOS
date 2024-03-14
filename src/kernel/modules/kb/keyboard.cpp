@@ -78,6 +78,7 @@ extern "C" void isr1_handler()
 			E9_WriteString("RSHIFT pressed\r\n");
 			rightShiftPressed = true;
 			break;
+
 		case RIGHTSHIFTRELEASE:
 			E9_WriteString("RSHIFT released\r\n");
 			rightShiftPressed = false;
@@ -89,14 +90,14 @@ extern "C" void isr1_handler()
             {
                 if (leftShiftPressed | rightShiftPressed) {
                     if (!capsLockPressed) {
-                        handleCharacter(charToUpper(kbset1::ScanCodeLookupTableShift[scanCode]));
+                        handleCharacter(charToUpper(KBSet1ScanCodeLookupTableShift[scanCode]));
                     } else {
-                        handleCharacter(charToLower(kbset1::ScanCodeLookupTableShift[scanCode]));
+                        handleCharacter(charToLower(KBSet1ScanCodeLookupTableShift[scanCode]));
                     }
                 } else if (capsLockPressed) {
-                    handleCharacter(charToUpper(kbset1::ScanCodeLookupTable[scanCode]));
+                    handleCharacter(charToUpper(KBSet1ScanCodeLookupTable[scanCode]));
                 } else {
-                    handleCharacter(charToLower(kbset1::ScanCodeLookupTable[scanCode]));
+                    handleCharacter(charToLower(KBSet1ScanCodeLookupTable[scanCode]));
                 }
             }
             break;

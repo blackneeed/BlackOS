@@ -1,7 +1,7 @@
 #pragma once
 #include "../../std/stdlib.hpp"
 #include "../../std/stdio.cpp"
-#include "../colorLookup.cpp"
+#include "../../std/stdcolor.cpp"
 #include "../../std/stdstring.cpp"
 
 extern uint8_t DEFAULT_COLOR; // ../drivers/Screen.cpp

@@ -2,7 +2,7 @@
 
 #include "stdlib.hpp"
 #include "stdport.cpp"
-#include "stdcolor.hpp"
+#include "stdcolor.cpp"
 
 // Debugging
 
