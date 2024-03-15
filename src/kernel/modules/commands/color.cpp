@@ -18,7 +18,7 @@ void colorCommand(char* commandParts[], uint32_t tokenCount) {
             return;
         }
         const char* colorHelp = colorHelpLookup(commandParts[2]);
-        if (colorHelp == LOOKUP_UNKNOWN) {
+        if (colorHelp == (const char*)LOOKUP_UNKNOWN) { // Stop VSCode from yelling at me
             printString("Invalid color type!\r\n");
             return;
         }

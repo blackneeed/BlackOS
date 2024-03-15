@@ -7,5 +7,6 @@ void helpCommand(char* commandParts[], uint32_t tokenCount) {
     printString("- 'version'\r\n");
     printString("- 'help'\r\n");
     printString("- 'cls'\r\n");
+    printString("- 'color'\r\n");
     printString("- 'echo'\r\n");
 }
