@@ -65,11 +65,22 @@ StartPM:
 [extern _start]
 
 Start64:
-    mov edi, 0xB8000
-    mov rax, 0x1F201F201F201F20
-    mov ecx, 500
-	rep stosq
+	call ActivateSSE
+	call _start
+	jmp $ ; For some reason we returned from the kernel
 
-	jmp _start
+ActivateSSE:
+	mov eax, 0x1
+	cpuid
+	test edx, 1<<25
+	jz .NoSSE
+	ret
+
+.NoSSE:
+	cli
+	mov [0xb8000], byte 's' ; Stands for SSE (failure)
+	.halt:
+	hlt
+	jmp .halt
 
 times 2048-($-$$) db 0

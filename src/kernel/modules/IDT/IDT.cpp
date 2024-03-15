@@ -23,13 +23,13 @@ void remapPic();
 void initializeIDT()
 {
 
-    _idt[1].zero = 0;
-    _idt[1].offset_low = (uint16_t)(((uint64_t)&isr1 & 0x000000000000ffff));
-    _idt[1].offset_mid = (uint16_t)(((uint64_t)&isr1 & 0x00000000ffff0000) >> 16);
-    _idt[1].offset_high = (uint32_t)(((uint64_t)&isr1 & 0xffffffff00000000) >> 32);
-    _idt[1].ist = 0;
-    _idt[1].selector = 0x08;
-    _idt[1].types_attr = 0x8e;
+    _idt[0x01].zero = 0;
+    _idt[0x01].offset_low = (uint16_t)(((uint64_t)&isr1 & 0x000000000000ffff));
+    _idt[0x01].offset_mid = (uint16_t)(((uint64_t)&isr1 & 0x00000000ffff0000) >> 16);
+    _idt[0x01].offset_high = (uint32_t)(((uint64_t)&isr1 & 0xffffffff00000000) >> 32);
+    _idt[0x01].ist = 0;
+    _idt[0x01].selector = 0x08;
+    _idt[0x01].types_attr = 0x8e;
 
     remapPic();
 
