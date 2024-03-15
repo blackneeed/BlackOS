@@ -1,7 +1,17 @@
 #!/bin/bash
 
 sudo dnf update -y
-sudo dnf install -y make nasm qemu genisoimage gcc gcc-c++ bison flex gmp-devel mpfr-devel texinfo
+sudo dnf install -y make
+sudo dnf install -y nasm
+sudo dnf install -y qemu
+sudo dnf install -y genisoimage
+sudo dnf install -y gcc
+sudo dnf install -y gcc-c++
+sudo dnf install -y bison
+sudo dnf install -y flex
+sudo dnf install -y gmp-devel
+sudo dnf install -y mpfr-devel
+sudo dnf install -y texinfo
 
 export PREFIX="/usr/local/x86_64elfgcc"
 export TARGET=x86_64-elf

@@ -1,7 +1,16 @@
 #!/bin/bash
 
 sudo pacman -Syu --noconfirm
-sudo pacman -S --noconfirm make nasm qemu genisoimage base-devel bison flex gmp mpfr texinfo
+sudo pacman -S --noconfirm make
+sudo pacman -S --noconfirm nasm
+sudo pacman -S --noconfirm qemu
+sudo pacman -S --noconfirm genisoimage
+sudo pacman -S --noconfirm base-devel
+sudo pacman -S --noconfirm bison
+sudo pacman -S --noconfirm flex
+sudo pacman -S --noconfirm gmp
+sudo pacman -S --noconfirm mpfr
+sudo pacman -S --noconfirm texinfo
 
 export PREFIX="/usr/local/x86_64elfgcc"
 export TARGET=x86_64-elf
