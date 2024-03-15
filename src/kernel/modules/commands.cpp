@@ -11,7 +11,7 @@ extern char commandBuffer[];
 extern uint8_t commandLength;
 #define MAX_COMMAND_ARGS 12 // Not counting the name
 
-void callCommand(char* commandParts[], uint32_t tokenCount, const char* command) {
+void callCommand(char* commandParts[], const uint32_t tokenCount, const char* command) {
     if (strcmp("cls", command))
         clsCommand(commandParts, tokenCount);
     else if (strcmp("help", command))
@@ -30,7 +30,7 @@ void executeCommand() {
     commandBuffer[commandLength] = '\0';
     const char* commandAll = (const char*)commandBuffer;
     char* commandParts[MAX_COMMAND_ARGS + 1] = {}; // Command arguments + 1 (leaving space for name)
-    uint32_t tokenCount = splitString((char*)commandAll, ' ', commandParts, MAX_COMMAND_ARGS + 1);
+    const uint32_t tokenCount = splitString((char*)commandAll, ' ', commandParts, MAX_COMMAND_ARGS + 1);
     const char* command = toLower(commandParts[0]);
     if (isSpace(command)) {
         return;

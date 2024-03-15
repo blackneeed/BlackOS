@@ -121,3 +121,16 @@ bool endsWith(const char* str, const char* suffix) {
 
     return true;
 } 
+
+bool isCharAlpha(char chr) {
+    return chr >= 'A' && chr <= 'Z' || chr <= 'z' && chr >= 'a';
+}
+
+bool isAlpha(const char* str) { 
+    while (*str != '\0') {
+        if (!isCharAlpha(*str)) {
+            return false;
+        }
+    }
+    return true;
+}

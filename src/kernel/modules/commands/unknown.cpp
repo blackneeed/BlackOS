@@ -2,7 +2,7 @@
 #include "../../std/stdlib.hpp"
 #include "../../std/stdio.cpp"
 
-void unknownCommand(char* commandParts[], uint32_t tokenCount) {
+void unknownCommand(char* commandParts[], const uint32_t tokenCount) {
     printString("Unknown command '");
     printString(commandParts[0]);
     printString("'!,\r\n");

@@ -3,14 +3,14 @@
 #include "../../std/stdlib.hpp"
 #include "../../sys/config.hpp"
 
-void versionCommand(char* commandParts[], uint32_t tokenCount) {
+void versionCommand(char* commandParts[], const uint32_t tokenCount) {
     printString(OSNAME);
     printChar(' ');
     printString(OSVERSION);
-    if (isAlpha) {
+    if (isAlphaVersion) {
         printChar(' ');
         printString("alpha");
-    } else if (isBeta) {
+    } else if (isBetaVersion) {
         printChar(' ');
         printString("beta");
     }

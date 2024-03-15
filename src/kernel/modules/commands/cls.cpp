@@ -6,7 +6,7 @@
 
 extern uint8_t color; // ../drivers/Screen.cpp
 
-void clsCommand(char* commandParts[], uint32_t tokenCount) {
+void clsCommand(char* commandParts[], const uint32_t tokenCount) {
     if (tokenCount < 2) {
         clearScreen();
         return;
