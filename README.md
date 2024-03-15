@@ -6,7 +6,9 @@
 <hr/>
 
 ### To build the toolchain run this:
-- ```$ bash -x debian-build.sh```
+- ```$ bash -x debian-build.sh``` (Debian)
+- ```$ bash -x fedora-build.sh``` (Fedora)
+- ```$ bash -x arch-build.sh``` (Arch)
 
 <hr/>
 
