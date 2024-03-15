@@ -91,6 +91,6 @@ const char* colorHelpLookup(char* colorMode) {
     } else if (strcmp(colorMode, "bg")) {
         return "0: Black\r\n1: Blue\r\n2: Green\r\n3: Cyan\r\n4: Red\r\n5: Magenta\r\n6: Brown\r\n7: Light Gray\r\n8: Blinking Black\r\n9: Blinking Blue\r\nA: Blinking Green\r\nB: Blinking Cyan\r\nC: Blinking Red\r\nD: Blinking Magenta\r\nE: Blinking Yellow\r\nF: Blinking White";
     } else {
-        return LOOKUP_UNKNOWN;
+        return (const char*)LOOKUP_UNKNOWN; // Again, stop VSCode from yelling at me
     }
 }
