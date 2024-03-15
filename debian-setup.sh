@@ -1,3 +1,5 @@
+#!/bin/bash
+
 sudo chmod 1777 /tmp
 sudo rm -rf /tmp/src
 sudo apt update
@@ -28,7 +30,7 @@ curl -O https://ftp.gnu.org/gnu/gcc/gcc-10.2.0/gcc-10.2.0.tar.gz
 tar xf gcc-10.2.0.tar.gz
 mkdir gcc-build
 cd gcc-build
-../gcc-10.2.0/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --disable-libssp --enable-languages=c++ --without-headers
+../gcc-10.2.0/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --disable-libssp --enable-languages=c++,c --without-headers
 sudo make all-gcc
 sudo make all-target-libgcc
 sudo make install-gcc
