@@ -1,5 +1,5 @@
 #pragma once
-#include "../../std/stdlib.hpp"
+#include "../../std/stdlib.cpp"
 #include "../../std/stdio.cpp"
 
 void echoCommand(char* commandParts[], const uint32_t tokenCount) {

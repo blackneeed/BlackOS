@@ -1,5 +1,5 @@
 #pragma once
-#include "../../std/stdlib.hpp"
+#include "../../std/stdlib.cpp"
 #include "../../std/stdio.cpp"
 #include "../../std/stdcolor.cpp"
 #include "../../std/stdstring.cpp"

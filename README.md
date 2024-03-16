@@ -1,7 +1,6 @@
 # BlackOS
 
 ## BlackOS is an open-source operating system made in x86-64 assembly (NASM) and with C++ (GCC)
-## There is currently no option for building on arch
 
 <hr/>
 

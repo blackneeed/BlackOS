@@ -1,8 +1,7 @@
 #include "std/stdio.cpp"
 #include "modules/IDT/IDT.cpp"
-#include "std/stdlib.hpp"
+#include "std/stdlib.cpp"
 #include "sys/config.hpp"
-
 uint16_t lastPrint;
 
 void init() {

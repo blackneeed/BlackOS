@@ -1,5 +1,5 @@
 #pragma once
-#include "../../std/stdlib.hpp"
+#include "../../std/stdlib.cpp"
 #include "../../std/stdport.cpp"
 #include "../kb/keyboard.cpp"
 

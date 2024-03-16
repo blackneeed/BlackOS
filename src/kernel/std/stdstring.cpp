@@ -1,5 +1,5 @@
 #pragma once
-#include "stdlib.hpp"
+#include "stdlib.cpp"
 
 int strcmp(const char* str1, const char* str2) {
     while (*str1 && (*str1 == *str2)) {
