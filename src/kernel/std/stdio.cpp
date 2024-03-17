@@ -3,6 +3,10 @@
 #include "stdlib.cpp"
 #include "stdport.cpp"
 #include "stdcolor.cpp"
+#include "../modules/kb/key.hpp"
+
+extern uint32_t keyPressCount;
+extern Key lastKeyInfo;
 
 // Debugging
 
@@ -122,6 +126,15 @@ void printString(const char* string, uint8_t color = color)
     for (size_t i = 0; string[i] != '\0'; i++) {
         printChar(string[i]);
     }
+}
+
+Key getKey() {
+    int lastKeyPressCount = keyPressCount;
+    while (keyPressCount == lastKeyPressCount) {
+        // Hang
+    }
+    // Now a key has been pressed
+    return lastKeyInfo;
 }
 
 // Screen clearing
