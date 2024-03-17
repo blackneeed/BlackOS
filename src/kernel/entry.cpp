@@ -2,8 +2,6 @@
 #include "modules/IDT/IDT.cpp"
 #include "std/stdlib.cpp"
 #include "sys/config.hpp"
-#include "modules/kb/key.hpp"
-#include "std/stdstring.cpp"
 #include "modules/commands/commands.cpp"
 
 uint16_t lastPrint;
