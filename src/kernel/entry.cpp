@@ -10,7 +10,7 @@ char commandBuffer[MAX_COMMAND_LENGTH];
 bool capsLockPressed, leftShiftPressed, rightShiftPressed = false;
 
 void init() {
-    printString("Welcome from ");
+    printString("Welcome to ");
     printString(OSNAME);
     printString("!\r\n");
     lastPrint = cursorPos;
