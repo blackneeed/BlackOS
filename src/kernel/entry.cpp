@@ -4,6 +4,7 @@
 #include "sys/config.hpp"
 #include "modules/kb/key.hpp"
 #include "std/stdstring.cpp"
+#include "modules/commands/commands.cpp"
 
 uint16_t lastPrint;
 #define MAX_COMMAND_LENGTH 128
