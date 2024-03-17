@@ -7,6 +7,8 @@
 
 extern uint32_t keyPressCount;
 extern Key lastKeyInfo;
+extern bool leftShiftPressed, rightShiftPressed, capsLockPressed;
+extern uint16_t lastPrint;
 
 // Debugging
 
@@ -137,6 +139,44 @@ Key getKey() {
     return lastKeyInfo;
 }
 
+void deleteChar(uint8_t color = color) {
+    if (cursorPos > 0) {
+        cursorPos--;
+        printChar(' ');
+        cursorPos--;
+        setCursorPos();
+    }
+}
+
+int readLine(const char* message, char buffer[], size_t bufferSize) {
+    printString(message);
+    lastPrint = cursorPos;
+    int length = 0;
+    while (true) {
+        Key key = getKey();
+        if (key.isCharacter && key.keyCode == character && length < bufferSize - 1) {
+            char chr = processCharacter(key.scanCode);
+            printChar(chr);
+            buffer[length++] = chr;
+        } else if (key.keyCode == tab) {
+            printChar('\t');
+        } else if (key.keyCode == backspace && cursorPos > lastPrint) {
+            deleteChar();
+            buffer[length--] = '\0';
+        } else if (key.keyCode == enter) {
+            break;
+        } else if (key.keyCode == lshiftpress || key.keyCode == lshiftrelease) {
+            leftShiftPressed = !leftShiftPressed;
+        } else if (key.keyCode == rshiftpress || key.keyCode == rshiftrelease) {
+            rightShiftPressed = !rightShiftPressed;
+        } else if (key.keyCode == caps) {
+            capsLockPressed = !capsLockPressed;
+        }
+    }
+    lastPrint = cursorPos;
+    return length;
+}
+
 // Screen clearing
 
 void clearScreen(uint64_t color = color)
@@ -157,14 +197,5 @@ void clearScreen(uint64_t color = color)
 void setColor(uint64_t color = color) {
     for (uint16_t pos = 0; pos < VGA_COLS * VGA_ROWS; pos++) {
         *(VGA_ADDRESS + pos * 2 + 1) = color;
-    }
-}
-
-void deleteChar(uint8_t color = color) {
-    if (cursorPos > 0) {
-        cursorPos--;
-        printChar(' ');
-        cursorPos--;
-        setCursorPos();
     }
 }

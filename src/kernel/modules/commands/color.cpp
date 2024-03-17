@@ -7,11 +7,6 @@
 extern uint8_t color; // ../drivers/Screen.cpp
 
 void colorCommand(char* commandParts[], const uint32_t tokenCount) {
-    if (tokenCount < 2) {
-        clearScreen();
-        return;
-    }
-
     if (strcmp(commandParts[1], "?")) {
         if (tokenCount < 3) {
             printString("Syntax: color ? <color type>\r\nColor types\r\n'fg': foreground\r\n'bg': background\r\n");
