@@ -9,4 +9,5 @@ void helpCommand(char* commandParts[], const uint32_t tokenCount) {
     printString("- 'cls'\r\n");
     printString("- 'color'\r\n");
     printString("- 'echo'\r\n");
+    printString("- 'hello'\r\n");
 }

@@ -5,6 +5,7 @@
 #include "commands/echo.cpp"
 #include "commands/version.cpp"
 #include "commands/color.cpp"
+#include "commands/hello.cpp"
 #include "commands/unknown.cpp"
 
 extern char commandBuffer[];
@@ -22,6 +23,8 @@ void callCommand(char* commandParts[], const uint32_t tokenCount, const char* co
         versionCommand(commandParts, tokenCount);
     else if (strcmp("color", command))
         colorCommand(commandParts, tokenCount);
+    else if (strcmp("hello", command))
+        helloCommand(commandParts, tokenCount);
     else
         unknownCommand(commandParts, tokenCount);
 }
