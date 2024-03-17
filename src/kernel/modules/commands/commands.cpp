@@ -1,12 +1,12 @@
 #pragma once
-#include "../std/stdstring.cpp"
-#include "commands/cls.cpp"
-#include "commands/help.cpp"
-#include "commands/echo.cpp"
-#include "commands/version.cpp"
-#include "commands/color.cpp"
-#include "commands/hello.cpp"
-#include "commands/unknown.cpp"
+#include "../../std/stdstring.cpp"
+#include "cls.cpp"
+#include "help.cpp"
+#include "echo.cpp"
+#include "version.cpp"
+#include "color.cpp"
+#include "hello.cpp"
+#include "unknown.cpp"
 
 extern char commandBuffer[];
 #define MAX_COMMAND_ARGS 12 // Not counting the name

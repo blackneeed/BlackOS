@@ -131,6 +131,7 @@ bool isAlpha(const char* str) {
         if (!isCharAlpha(*str)) {
             return false;
         }
+        str++;
     }
     return true;
 }
