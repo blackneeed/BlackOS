@@ -7,7 +7,7 @@
 
 extern uint32_t keyPressCount;
 extern Key lastKeyInfo;
-bool capsLockPressed, leftShiftPressed, rightShiftPressed = false;
+bool capsLockPressed = false, leftShiftPressed = false, rightShiftPressed = false, altPressed = false, controlPressed = false;
 extern uint16_t lastPrint;
 
 // Debugging
@@ -189,6 +189,10 @@ int readLine(const char* message, char buffer[], size_t bufferSize, uint8_t colo
             rightShiftPressed = !rightShiftPressed;
         } else if (key.keyCode == caps) {
             capsLockPressed = !capsLockPressed;
+        } else if (key.keyCode == controlpress || key.keyCode == controlrelease) {
+            controlPressed = !controlPressed;
+        } else if (key.keyCode == altpress || key.keyCode == altrelease) {
+            altPressed = !altPressed;
         }
     }
     lastPrint = cursorPos;

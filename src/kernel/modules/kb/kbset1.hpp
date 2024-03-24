@@ -8,6 +8,11 @@
 #define RIGHTSHIFT 0x36
 #define RIGHTSHIFTRELEASE 0xB6
 #define TAB 0x0F
+#define ALTPRESS 0x38
+#define ALTRELEASE 0xB8
+#define CONTROLPRESS 0x1D
+#define CONTROLRELEASE 0x9D
+#define DELETEPRESS 0x53
 
 const char KBSet1ScanCodeLookupTable[] =
 {

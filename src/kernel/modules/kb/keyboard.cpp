@@ -81,6 +81,51 @@ void handleRShiftRelease() {
     keyPressCount++;
 }
 
+void handleControlPress() {
+    E9_WriteString("Control pressed!\r\n");
+    Key info;
+    info.isCharacter = false;
+    info.keyCode = controlpress;
+    lastKeyInfo = info;
+    keyPressCount++;
+}
+
+void handleControlRelease() {
+    E9_WriteString("Control released!\r\n");
+    Key info;
+    info.isCharacter = false;
+    info.keyCode = controlrelease;
+    lastKeyInfo = info;
+    keyPressCount++;
+}
+
+void handleAltPress() {
+    E9_WriteString("Alt pressed!\r\n");
+    Key info;
+    info.isCharacter = false;
+    info.keyCode = altpress;
+    lastKeyInfo = info;
+    keyPressCount++;
+}
+
+void handleAltRelease() {
+    E9_WriteString("Alt released!\r\n");
+    Key info;
+    info.isCharacter = false;
+    info.keyCode = altrelease;
+    lastKeyInfo = info;
+    keyPressCount++;
+}
+
+void handleDeletePress() {
+    E9_WriteString("Delete pressed!\r\n");
+    Key info;
+    info.isCharacter = false;
+    info.keyCode = deletepress;
+    lastKeyInfo = info;
+    keyPressCount++;
+}
+
 void handleCaps() {
     E9_WriteString("Caps lock pressed!\r\n");
     Key info;
@@ -126,6 +171,25 @@ extern "C" void isr1_handler()
 			handleLShiftPress();
 			break;
 
+        case ALTPRESS:
+            handleAltPress();
+            break;
+        
+        case ALTRELEASE:
+            handleAltRelease();
+            break;
+
+        case CONTROLPRESS:
+            handleControlPress();
+            break;
+        
+        case CONTROLRELEASE:
+            handleControlRelease();
+            break;
+
+        case DELETEPRESS:
+            handleDeletePress();
+            break;
 
         default:
             if (scanCode < 0x3A)

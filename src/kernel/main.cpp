@@ -12,7 +12,7 @@ uint16_t lastPrint;
 #define MAX_COMMAND_LENGTH 128
 char commandBuffer[MAX_COMMAND_LENGTH];
 
-OSConfig osConfig = OSConfig {"BlackOS", "1.0.0", true, false};
+OSConfig osConfig = OSConfig {"BlackOS", 1};
 
 void KLoop() {
     int length = readLine("> ", commandBuffer, MAX_COMMAND_LENGTH);
@@ -24,6 +24,7 @@ CNAME void KStart() {
     printString("Welcome to ");
     printString(osConfig.name);
     printLn("!");
+    E9_WriteString("\r\n"); // Make the first line written through E9 not be on the qemu monitor information.
     lastPrint = cursorPos;
     initializeIDT();
     while (true) { KLoop(); }

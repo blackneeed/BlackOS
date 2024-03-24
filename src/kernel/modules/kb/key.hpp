@@ -9,7 +9,13 @@ enum KeyCode {
     lshiftrelease = 5,
     rshiftpress = 6,
     rshiftrelease = 7,
-    caps = 8
+    controlpress = 8,
+    controlrelease = 9,
+    altpress = 10,
+    altrelease = 11,
+    deletepress = 12,
+    deleterelease = 13,
+    caps = 14
 };
 
 typedef struct {

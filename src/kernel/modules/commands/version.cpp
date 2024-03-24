@@ -8,12 +8,5 @@ void versionCommand(char* commandParts[], const uint32_t tokenCount) {
     OSConfig config = fetchOSInfo().config;
     printString(config.name);
     printChar(' ');
-    printString(config.version);
-    if (config.isAlpha) {
-        printLn(" alpha");
-    } else if (config.isBeta) {
-        printLn(" beta");
-    } else {
-        printLn();
-    }
+    printLn(intToString(config.revision));
 }
