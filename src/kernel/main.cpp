@@ -1,3 +1,7 @@
+
+
+
+
 #include "std/stdio.cpp"
 #include "modules/IDT/IDT.cpp"
 #include "std/stdlib.cpp"
@@ -7,25 +11,21 @@
 uint16_t lastPrint;
 #define MAX_COMMAND_LENGTH 128
 char commandBuffer[MAX_COMMAND_LENGTH];
-bool capsLockPressed, leftShiftPressed, rightShiftPressed = false;
 
-void init() {
-    printString("Welcome to ");
-    printString(OSNAME);
-    printString("!\r\n");
-    lastPrint = cursorPos;
-}
+OSConfig osConfig = OSConfig {"BlackOS", "1.0.0", true, false};
 
-void loop() {
+void KLoop() {
     int length = readLine("> ", commandBuffer, MAX_COMMAND_LENGTH);
-    printString("\r\n");
     executeCommand(length);
 }
 
-CNAME void _start() {
+CNAME void KStart() {
     clearScreen();
+    printString("Welcome to ");
+    printString(osConfig.name);
+    printLn("!");
+    lastPrint = cursorPos;
     initializeIDT();
-    init();
-    while (true) { loop(); }
+    while (true) { KLoop(); }
     return;
 }

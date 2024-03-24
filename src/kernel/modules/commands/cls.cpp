@@ -4,7 +4,7 @@
 #include "../../std/stdcolor.cpp"
 #include "../../std/stdstring.cpp"
 
-extern uint8_t color; // ../drivers/Screen.cpp
+extern uint8_t termColor; // ../drivers/Screen.cpp
 
 void clsCommand(char* commandParts[], const uint32_t tokenCount) {
     if (tokenCount < 2) {
@@ -14,16 +14,15 @@ void clsCommand(char* commandParts[], const uint32_t tokenCount) {
 
     if (strcmp(commandParts[1], "?")) {
         if (tokenCount < 3) {
-            printString("Syntax: cls ? <color type>\r\nColor types\r\n'fg': foreground\r\n'bg': background\r\n");
+            printLn("Syntax: cls ? <color type>\r\nColor types\r\n'fg': foreground\r\n'bg': background");
             return;
         }
         const char* colorHelp = colorHelpLookup(commandParts[2]);
         if (colorHelp == (const char*)LOOKUP_UNKNOWN) { // Stop VSCode from yelling at me
-            printString("Invalid color type!\r\n");
+            printLn("Invalid color type!");
             return;
         }
-        printString(colorHelp);
-        printString("\r\n");
+        printLn(colorHelp);
     } else {
         const char* colorString = commandParts[1];
         if (getLength(colorString) != 2) {
@@ -41,7 +40,7 @@ void clsCommand(char* commandParts[], const uint32_t tokenCount) {
             return;
         }
 
-        color = bg | fg;
+        termColor = bg | fg;
         clearScreen();
     }
 }

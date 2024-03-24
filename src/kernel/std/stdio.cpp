@@ -7,25 +7,34 @@
 
 extern uint32_t keyPressCount;
 extern Key lastKeyInfo;
-extern bool leftShiftPressed, rightShiftPressed, capsLockPressed;
+bool capsLockPressed, leftShiftPressed, rightShiftPressed = false;
 extern uint16_t lastPrint;
 
 // Debugging
 
-void E9_WriteChar(uint8_t character) {
+void E9_WriteChar(uint8_t character, const char* fg = ANSI_WHITE_FG, const char* bg = ANSI_BLACK_BG) {
+    for (int i = 0; fg[i] != '\0'; i++) {
+        outb(0xE9, fg[i]);
+    }
+    for (int i = 0; bg[i] != '\0'; i++) {
+        outb(0xE9, bg[i]);
+    }
     outb(0xE9, character);
+    for (int i = 0; ANSI_RESET[i] != '\0'; i++) {
+        outb(0xE9, ANSI_RESET[i]);
+    }
 }
 
-void E9_WriteString(const char* string) {
+void E9_WriteString(const char* string, const char* fg = ANSI_WHITE_FG, const char* bg = ANSI_BLACK_BG) {
     for (size_t i = 0; string[i] != '\0'; i++) {
-        E9_WriteChar(string[i]);
+        E9_WriteChar(string[i], fg, bg);
     }
 }
 
 // Settings
 
 uint16_t cursorPos;
-uint8_t color = BG_BLACK | FG_WHITE;
+uint8_t termColor = BG_BLACK | FG_WHITE;
 #define VGA_ADDRESS (uint8_t*)0xb8000
 #define VGA_COLS 80
 #define VGA_ROWS 25
@@ -48,7 +57,7 @@ void setCursorPos(uint16_t newPos = cursorPos) { // Defaults to cursor pos becua
 
 // Screen scrolling
 
-void scrollScreenUp() {
+void scrollScreenUp(uint8_t color = termColor) {
     for (int y = 1; y < VGA_ROWS; y++) {
         for (int x = 0; x < VGA_COLS; x++) {
             uint16_t srcPos = posFromCoords(x, y);
@@ -66,7 +75,7 @@ void scrollScreenUp() {
     }
 }
 
-void scrollScreenDown() {
+void scrollScreenDown(uint8_t color = termColor) {
     for (int y = VGA_ROWS - 2; y >= 0; y--) {
         for (int x = 0; x < VGA_COLS; x++) {
             uint16_t srcPos = posFromCoords(x, y);
@@ -86,7 +95,7 @@ void scrollScreenDown() {
 
 // Printing
 
-void printChar(char character, uint8_t color = color)
+void printChar(char character, uint8_t color = termColor)
 {
     switch (character) {
         case '\n':
@@ -101,7 +110,7 @@ void printChar(char character, uint8_t color = color)
         case '\t':
             for (int i = 0; i < TAB_WIDTH; i++) {
                 if (cursorPos >= VGA_COLS * VGA_ROWS) {
-                    scrollScreenUp();
+                    scrollScreenUp(color);
                     cursorPos -= VGA_COLS;
                 }
                 *(VGA_ADDRESS + cursorPos * 2) = ' ';
@@ -122,12 +131,20 @@ void printChar(char character, uint8_t color = color)
     setCursorPos();
 }
 
-void printString(const char* string, uint8_t color = color)
+void printString(const char* string, uint8_t color = termColor)
 {
-    uint16_t index = cursorPos;
     for (size_t i = 0; string[i] != '\0'; i++) {
-        printChar(string[i]);
+        printChar(string[i], color);
     }
+}
+
+void printLn(const char* string, uint8_t color = termColor) {
+    printString(string, color);
+    printString("\r\n", color);
+}
+
+void printLn(uint8_t color = termColor) {
+    printString("\r\n", color);
 }
 
 Key getKey() {
@@ -139,31 +156,32 @@ Key getKey() {
     return lastKeyInfo;
 }
 
-void deleteChar(uint8_t color = color) {
+void deleteChar(uint8_t color = termColor) {
     if (cursorPos > 0) {
         cursorPos--;
-        printChar(' ');
+        printChar(' ', color);
         cursorPos--;
         setCursorPos();
     }
 }
 
-int readLine(const char* message, char buffer[], size_t bufferSize) {
-    printString(message);
+int readLine(const char* message, char buffer[], size_t bufferSize, uint8_t color = termColor) {
+    printString(message, color);
     lastPrint = cursorPos;
     int length = 0;
     while (true) {
         Key key = getKey();
         if (key.isCharacter && key.keyCode == character && length < bufferSize - 1) {
             char chr = processCharacter(key.scanCode);
-            printChar(chr);
+            printChar(chr, color);
             buffer[length++] = chr;
         } else if (key.keyCode == tab) {
-            printChar('\t');
+            printChar('\t', color);
         } else if (key.keyCode == backspace && cursorPos > lastPrint) {
-            deleteChar();
+            deleteChar(color);
             buffer[length--] = '\0';
         } else if (key.keyCode == enter) {
+            printLn();
             break;
         } else if (key.keyCode == lshiftpress || key.keyCode == lshiftrelease) {
             leftShiftPressed = !leftShiftPressed;
@@ -179,22 +197,17 @@ int readLine(const char* message, char buffer[], size_t bufferSize) {
 
 // Screen clearing
 
-void clearScreen(uint64_t color = color)
+void clearScreen(uint64_t color = termColor)
 {
-    uint64_t value = 0;
-    value += color << 8;
-    value += color << 24;
-    value += color << 40;
-    value += color << 56;
-
-    for (uint64_t* i = (uint64_t*)VGA_ADDRESS; i < (uint64_t*)(VGA_ADDRESS + 4000); i++){
-        *i = value;
+    for (uint16_t pos = VGA_COLS * VGA_ROWS; pos > 0; pos--) {
+        setCursorPos(pos);
+        deleteChar(color);
     }
 
     setCursorPos(0);
 }
 
-void setColor(uint64_t color = color) {
+void setColor(uint64_t color = termColor) {
     for (uint16_t pos = 0; pos < VGA_COLS * VGA_ROWS; pos++) {
         *(VGA_ADDRESS + pos * 2 + 1) = color;
     }

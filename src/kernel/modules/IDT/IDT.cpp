@@ -11,14 +11,28 @@ struct IDT64
     uint8_t types_attr;
     uint16_t offset_mid;
     uint32_t offset_high;
-    uint32_t zero;
+    uint32_t zero = 0;
 };
 
 EXPORT IDT64 _idt[256];
 EXPORT uint64_t isr1;
 CNAME void LoadIDT();
 
-void remapPic();
+void remapPic() {
+    uint8_t a1, a2;
+    a1 = inb(PIC1_DATA);
+    a2 = inb(PIC2_DATA);
+    outb(PIC1_COMMAND, ICW1_INIT | ICW1_ICW4);
+    outb(PIC2_COMMAND, ICW1_INIT | ICW1_ICW4);
+    outb(PIC1_DATA, 0);
+    outb(PIC2_DATA, 8);
+    outb(PIC1_DATA, 4);
+    outb(PIC2_DATA, 2);
+    outb(PIC1_DATA, ICW4_8086);
+    outb(PIC2_DATA, ICW4_8086);
+    outb(PIC1_DATA, a1);
+    outb(PIC2_DATA, a2);
+}
 
 void initializeIDT()
 {
@@ -36,21 +50,4 @@ void initializeIDT()
     outb(0x21, 0xfd);
     outb(0xa1, 0xff);
     LoadIDT();
-}
-
-void remapPic()
-{
-    uint8_t a1, a2;
-    a1 = inb(PIC1_DATA);
-    a2 = inb(PIC2_DATA);
-    outb(PIC1_COMMAND, ICW1_INIT | ICW1_ICW4);
-    outb(PIC2_COMMAND, ICW1_INIT | ICW1_ICW4);
-    outb(PIC1_DATA, 0);
-    outb(PIC2_DATA, 8);
-    outb(PIC1_DATA, 4);
-    outb(PIC2_DATA, 2);
-    outb(PIC1_DATA, ICW4_8086);
-    outb(PIC2_DATA, ICW4_8086);
-    outb(PIC1_DATA, a1);
-    outb(PIC2_DATA, a2);
 }

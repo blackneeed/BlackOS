@@ -12,5 +12,5 @@ void echoCommand(char* commandParts[], const uint32_t tokenCount) {
     }
     printString(commandParts[i]);
   }
-  printString("\r\n");
+  printLn();
 }

@@ -7,7 +7,7 @@ char nameBuffer[256];
 void helloCommand(char* commandParts[], const uint32_t tokenCount) {
     readLine("Enter your name: ", nameBuffer, 256);
     const char* name = (const char*)nameBuffer;
-    printString("\r\nHello, ");
+    printString("Hello, ");
     printString(name);
-    printString("!\r\n");
+    printLn("!");
 }

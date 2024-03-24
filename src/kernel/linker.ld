@@ -1,10 +1,10 @@
 OUTPUT_FORMAT(binary)
-ENTRY (_start)
+ENTRY (KStart)
 
 INPUT
 (
     ../../build/stage2.o
-    ../../build/entry.o
+    ../../build/main.o
     ../../build/IDT.o
 )
 

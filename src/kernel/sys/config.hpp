@@ -1,6 +1,8 @@
 #pragma once
 
-const char* OSNAME = "BlackOS";
-const char* OSVERSION = "1.0.0";
-bool isAlphaVersion = true;
-bool isBetaVersion = false;
+typedef struct OSConfig {
+    const char* name;
+    const char* version;
+    bool isAlpha;
+    bool isBeta;
+} OSConfig;

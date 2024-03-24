@@ -5,6 +5,6 @@
 void unknownCommand(char* commandParts[], const uint32_t tokenCount) {
     printString("Unknown command '");
     printString(commandParts[0]);
-    printString("'!,\r\n");
-    printString("Type 'help' for help.\r\n");
+    printLn("'!");
+    printLn("Type 'help' for help.");
 }

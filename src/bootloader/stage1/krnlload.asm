@@ -54,8 +54,8 @@ main:
 hcf:
 	cli ; Clear interrupts
 	.halt: ; Halt in a infinite loop
-	hlt ; Halt
-	jmp .halt ; Jump back to the start of the loop
+		hlt ; Halt
+		jmp .halt ; Jump back to the start of the loop
 
 ; Clear Screen Function
 ClearScreen:
@@ -71,17 +71,17 @@ PutS:
 	push ax ; Push AX
 	push bx ; Push BX
 	.Loop:
-	mov al, [bx] ; Move the byte from BX to AL
-	test al, al ; Compare al
-	jz .Ret ; Jump if zero into return
-	mov ah, 0x0e ; Set the bios interrupt to 0x0e
-	int 0x10 ; Call video interurpt
-	inc bx ; Increment the BX data pointer
-	jmp .Loop ; Jump back into the start of the loop
+		mov al, [bx] ; Move the byte from BX to AL
+		test al, al ; Compare al
+		jz .Ret ; Jump if zero into return
+		mov ah, 0x0e ; Set the bios interrupt to 0x0e
+		int 0x10 ; Call video interurpt
+		inc bx ; Increment the BX data pointer
+		jmp .Loop ; Jump back into the start of the loop
 	.Ret: ; Define return
-	pop ax ; Pop AX
-	pop bx ; Pop BX
-	ret ; Return
+		pop ax ; Pop AX
+		pop bx ; Pop BX
+		ret ; Return
 
 ; Read disk function
 ReadDisk:
@@ -96,10 +96,10 @@ ReadDisk:
 	jc .ReadDiskFail ; If failed jump to read disk fail
 	ret ; Return
 
-.ReadDiskFail: ; Define read disk fail
-	mov bx, DiskFailString ; Move the DiskFailString into BX
-	call PutS ; Print
-	jmp hcf ; Halt and catch fire
+	.ReadDiskFail: ; Define read disk fail
+		mov bx, DiskFailString ; Move the DiskFailString into BX
+		call PutS ; Print
+		jmp hcf ; Halt and catch fire
 
 BootDisk: db 0 ; Changed later
 NameString: db "Kernel loader v1.0.1f", EndOfLine, 0 ; The name and version

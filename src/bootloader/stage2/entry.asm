@@ -62,11 +62,11 @@ StartPM:
 	jmp CODE_SEGMENT:Start64
 
 [bits 64]
-[extern _start]
+[extern KStart]
 
 Start64:
 	call ActivateSSE
-	call _start
+	call KStart
 	jmp $ ; For some reason we returned from the kernel
 
 ActivateSSE:

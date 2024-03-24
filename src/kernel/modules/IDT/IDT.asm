@@ -35,4 +35,4 @@ LoadIDT:
     lidt [idtDescriptor]
     sti
     ret
-    GLOBAL LoadIDT
+    global LoadIDT

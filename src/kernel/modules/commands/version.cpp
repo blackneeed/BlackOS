@@ -3,16 +3,17 @@
 #include "../../std/stdlib.cpp"
 #include "../../sys/config.hpp"
 
+extern OSConfig osConfig; // main.cpp
+
 void versionCommand(char* commandParts[], const uint32_t tokenCount) {
-    printString(OSNAME);
+    printString(osConfig.name);
     printChar(' ');
-    printString(OSVERSION);
-    if (isAlphaVersion) {
-        printChar(' ');
-        printString("alpha");
-    } else if (isBetaVersion) {
-        printChar(' ');
-        printString("beta");
+    printString(osConfig.version);
+    if (osConfig.isAlpha) {
+        printLn(" alpha");
+    } else if (osConfig.isBeta) {
+        printLn(" beta");
+    } else {
+        printLn();
     }
-    printString("\r\n");
 }
