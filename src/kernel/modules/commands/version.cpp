@@ -2,7 +2,7 @@
 #include "../../std/stdio.cpp"
 #include "../../std/stdlib.cpp"
 #include "../../sys/config.hpp"
-#include "../../sys/fetchInfo.cpp"
+#include "../../sys/api/fetchInfo.cpp"
 
 void versionCommand(char* commandParts[], const uint32_t tokenCount) {
     OSConfig config = fetchOSInfo().config;
