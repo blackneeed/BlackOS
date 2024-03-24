@@ -2,16 +2,16 @@
 #include "../../std/stdio.cpp"
 #include "../../std/stdlib.cpp"
 #include "../../sys/config.hpp"
-
-extern OSConfig osConfig; // main.cpp
+#include "../../sys/fetchInfo.cpp"
 
 void versionCommand(char* commandParts[], const uint32_t tokenCount) {
-    printString(osConfig.name);
+    OSConfig config = fetchOSInfo().config;
+    printString(config.name);
     printChar(' ');
-    printString(osConfig.version);
-    if (osConfig.isAlpha) {
+    printString(config.version);
+    if (config.isAlpha) {
         printLn(" alpha");
-    } else if (osConfig.isBeta) {
+    } else if (config.isBeta) {
         printLn(" beta");
     } else {
         printLn();
