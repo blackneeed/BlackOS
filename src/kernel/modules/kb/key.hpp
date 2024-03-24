@@ -15,6 +15,5 @@ enum KeyCode {
 typedef struct {
     bool isCharacter;
     KeyCode keyCode;
-    char character;
-    int scanCode;
+    int charScanCode;
 } Key;

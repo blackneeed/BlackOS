@@ -172,7 +172,7 @@ int readLine(const char* message, char buffer[], size_t bufferSize, uint8_t colo
     while (true) {
         Key key = getKey();
         if (key.isCharacter && key.keyCode == character && length < bufferSize - 1) {
-            char chr = processCharacter(key.scanCode);
+            char chr = processCharacter(key.charScanCode);
             printChar(chr, color);
             buffer[length++] = chr;
         } else if (key.keyCode == tab) {
