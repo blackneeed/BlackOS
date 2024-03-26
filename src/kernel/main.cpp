@@ -24,8 +24,7 @@ CNAME void KStart() {
     printString("Welcome to ");
     printString(osConfig.name);
     printLn("!");
-    E9_WriteString("\r\n"); // Make the first line written through E9 not be on the qemu monitor information.
-    lastPrint = cursorPos;
+    E9_WriteString("\r\n");
     initializeIDT();
     while (true) { KLoop(); }
     return;

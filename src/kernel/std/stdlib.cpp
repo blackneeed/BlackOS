@@ -58,7 +58,7 @@ const char* intToString(int value) { return intToString<int>(value); }
 const char* intToString(long long value) { return intToString<long long>(value); }
 
 CharInfo processCharacter(int scanCode) {
-	if (leftShiftPressed || rightShiftPressed && altPressed) {
+	if ((leftShiftPressed || rightShiftPressed) && altPressed) {
 		return {true, '\0'};
 	}
     if (leftShiftPressed || rightShiftPressed) {

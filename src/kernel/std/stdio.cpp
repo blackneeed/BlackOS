@@ -203,6 +203,50 @@ int readLine(const char* message, char buffer[], size_t bufferSize, uint8_t colo
     return length;
 }
 
+int readMultiLine(const char* message, char buffer[], size_t bufferSize, const char* lineWrapSymbol = "~ ", uint8_t lineWrapSymbolColor = termColor & 0b11110000 | FG_BLUE, uint8_t color = termColor) {
+    printString(message, color);
+    lastPrint = cursorPos;
+    int length = 0;
+    while (true) {
+        Key key = getKey();
+        if (key.isCharacter && key.keyCode == character && length < bufferSize - 1) {
+            CharInfo chrInfo = processCharacter(key.charScanCode);
+            if (chrInfo.isEmpty) {
+                continue;
+            }
+            printChar(chrInfo.chr, color);
+            buffer[length++] = chrInfo.chr;
+        } else if (key.keyCode == tab) {
+            printChar('\t', color);
+        } else if (key.keyCode == backspace && cursorPos > lastPrint) {
+            deleteChar(color);
+            buffer[length--] = '\0';
+        } else if (key.keyCode == enter) {
+            if (leftShiftPressed || rightShiftPressed) {
+                buffer[length++] = '\r';
+                buffer[length++] = '\n';
+                printLn();
+                printString(lineWrapSymbol, lineWrapSymbolColor);
+            } else {
+                printLn();
+                break;
+            }
+        } else if (key.keyCode == lshiftpress || key.keyCode == lshiftrelease) {
+            leftShiftPressed = !leftShiftPressed;
+        } else if (key.keyCode == rshiftpress || key.keyCode == rshiftrelease) {
+            rightShiftPressed = !rightShiftPressed;
+        } else if (key.keyCode == caps) {
+            capsLockPressed = !capsLockPressed;
+        } else if (key.keyCode == controlpress || key.keyCode == controlrelease) {
+            controlPressed = !controlPressed;
+        } else if (key.keyCode == altpress || key.keyCode == altrelease) {
+            altPressed = !altPressed;
+        }
+    }
+    lastPrint = cursorPos;
+    return length;
+}
+
 // Screen clearing
 
 void clearScreen(uint64_t color = termColor)
