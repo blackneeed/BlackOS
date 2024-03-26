@@ -3,6 +3,7 @@
 #include "stdlib.cpp"
 #include "stdport.cpp"
 #include "stdcolor.cpp"
+#include "stdcharInfo.hpp"
 #include "../modules/kb/key.hpp"
 
 extern uint32_t keyPressCount;
@@ -172,9 +173,12 @@ int readLine(const char* message, char buffer[], size_t bufferSize, uint8_t colo
     while (true) {
         Key key = getKey();
         if (key.isCharacter && key.keyCode == character && length < bufferSize - 1) {
-            char chr = processCharacter(key.charScanCode);
-            printChar(chr, color);
-            buffer[length++] = chr;
+            CharInfo chrInfo = processCharacter(key.charScanCode);
+            if (chrInfo.isEmpty) {
+                continue;
+            }
+            printChar(chrInfo.chr, color);
+            buffer[length++] = chrInfo.chr;
         } else if (key.keyCode == tab) {
             printChar('\t', color);
         } else if (key.keyCode == backspace && cursorPos > lastPrint) {

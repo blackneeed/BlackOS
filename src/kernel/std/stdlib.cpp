@@ -1,5 +1,6 @@
 #pragma once
-#include "../modules/kb/kbset1.hpp"
+#include "../modules/kb/PLKBSet.hpp" // Change this to import another kbset if you want another keyboard layout
+#include "stdcharInfo.hpp"
 
 typedef unsigned long long size_t;
 typedef unsigned char uint8_t;
@@ -11,7 +12,7 @@ typedef unsigned long long uint64_t;
 #define NULL nullptr
 #define TAB_WIDTH 4
 
-extern bool leftShiftPressed, rightShiftPressed, capsLockPressed;
+extern bool leftShiftPressed, rightShiftPressed, capsLockPressed, altPressed;
 char charToUpper(char chr); // It would be a circular import
 char charToLower(char chr); // It would be a circular import
 char intToStringOutput[128];
@@ -56,16 +57,23 @@ const char* intToString(short value) { return intToString<short>(value); }
 const char* intToString(int value) { return intToString<int>(value); }
 const char* intToString(long long value) { return intToString<long long>(value); }
 
-char processCharacter(int scanCode) {
-    if (leftShiftPressed | rightShiftPressed) {
+CharInfo processCharacter(int scanCode) {
+	if (leftShiftPressed || rightShiftPressed && altPressed) {
+		return {true, '\0'};
+	}
+    if (leftShiftPressed || rightShiftPressed) {
         if (!capsLockPressed) {
-            return charToUpper(KBSet1ScanCodeLookupTableShift[scanCode]);
+			return {false, charToUpper(ScanCodeLookupTableShift[scanCode])};
         } else {
-            return charToLower(KBSet1ScanCodeLookupTableShift[scanCode]);
+            return {false, charToLower(ScanCodeLookupTableShift[scanCode])};
         }
-    } else if (capsLockPressed) {
-        return charToUpper(KBSet1ScanCodeLookupTable[scanCode]);
+    } else if (altPressed && capsLockPressed) {
+		return {false, charToUpper(ScanCodeLookupTableAlt[scanCode])};
+	} else if (altPressed && !capsLockPressed) {
+		return {false, charToLower(ScanCodeLookupTableAlt[scanCode])};
+	} else if (capsLockPressed) {
+        return {false, charToUpper(ScanCodeLookupTable[scanCode])};
     } else {
-        return charToLower(KBSet1ScanCodeLookupTable[scanCode]);
+        return {false, charToLower(ScanCodeLookupTable[scanCode])};
     }
 }

@@ -7,9 +7,11 @@ Key lastKeyInfo;
 uint32_t keyPressCount;
 
 void handleCharacter(int scanCode) {
-    E9_WriteString("Character '");
-    E9_WriteChar(processCharacter(scanCode));
-    E9_WriteString("' pressed!\r\n");
+    if (!processCharacter(scanCode).isEmpty) {
+        E9_WriteString("Character '");
+        E9_WriteChar(processCharacter(scanCode).chr);
+        E9_WriteString("' pressed!\r\n");
+    }
     Key info;
     info.isCharacter = true;
     info.keyCode = character;

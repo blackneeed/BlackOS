@@ -14,7 +14,7 @@
 #define CONTROLRELEASE 0x9D
 #define DELETEPRESS 0x53
 
-const char KBSet1ScanCodeLookupTable[] =
+const char ScanCodeLookupTable[] =
 {
     0, 0, '1', '2',
     '3', '4', '5', '6',
@@ -35,7 +35,8 @@ const char KBSet1ScanCodeLookupTable[] =
     0, 0, 0, 0,    // Function keys continued
     0, 0, 0        // Function keys continued
 };
-const char KBSet1ScanCodeLookupTableShift[] =
+
+const char ScanCodeLookupTableShift[] =
 {
     0, 0, '!', '@',
     '#', '$', '%', '^',
@@ -56,3 +57,46 @@ const char KBSet1ScanCodeLookupTableShift[] =
     0, 0, 0, 0,    // Function keys continued
     0, 0, 0        // Function keys continued
 };
+
+const char ScanCodeLookupTableAlt[] = {
+    0, 0, '1', '2',
+    '3', '4', '5', '6',
+    '7', '8', '9', '0',
+    '-', '=', 0, 0,
+    'q', 'w', 'e', 'r',
+    't', 'y', 'u', 'i',
+    'o', 'p', '[', ']',
+    0, 0, 'a', 's',
+    'd', 'f', 'g', 'h',
+    'j', 'k', 'l', ';',
+    '\'', '`', 0, '\\',
+    'z', 'x', 'c', 'v',
+    'b', 'n', 'm', ',',
+    '.', '/', 0, '*',
+    0, ' ', 0, 0,  // Left Alt, Left Shift, Left Control
+    0, 0, 0, 0,    // Right Alt, Right Shift, Right Control, Function keys
+    0, 0, 0, 0,    // Function keys continued
+    0, 0, 0        // Function keys continued
+};
+
+// const char ScanCodeLookupTableAlt[] =
+// {
+//     0, 0, '1', '2',
+//     '3', '4', '5', '6',
+//     '7', '8', '9', '0',
+//     '-', '=', 0, 0,
+//     'q', 'w', 'ę', 'r',
+//     't', 'y', 'u', 'i',
+//     'ó', 'p', '[', ']',
+//     0, 0, 'ą', 'ś',
+//     'd', 'f', 'g', 'h',
+//     'j', 'k', 'ł', ';',
+//     '"', '~', 0, '\\',
+//     'ż', 'ź', 'ć', 'v',
+//     'b', 'ń', 'm', ',',
+//     '.', '/', 0, '*',
+//     0, ' ', 0, 0,  // Left Alt, Left Shift, Left Control
+//     0, 0, 0, 0,    // Right Alt, Right Shift, Right Control, Function keys
+//     0, 0, 0, 0,    // Function keys continued
+//     0, 0, 0        // Function keys continued
+// }; Polish characters are not supported within VGA Text Mode and do not fit within char
