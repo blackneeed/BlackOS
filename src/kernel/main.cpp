@@ -12,7 +12,7 @@ uint16_t lastPrint;
 #define MAX_COMMAND_LENGTH 128
 char commandBuffer[MAX_COMMAND_LENGTH];
 
-OSConfig osConfig = OSConfig {"BlackOS", 1};
+OSConfig osConfig = OSConfig {"BlackOS", 2};
 
 void KLoop() {
     int length = readLine("> ", commandBuffer, MAX_COMMAND_LENGTH);
