@@ -1,6 +1,6 @@
 #pragma once
 #include "../../std/stdlib.cpp"
-#include "../../std/stdio.cpp"
+#include "../../std/stddebug.cpp"
 #include "key.hpp"
 
 Key lastKeyInfo;

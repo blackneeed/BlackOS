@@ -1,6 +1,6 @@
 #pragma once
 #include "../../std/stdlib.cpp"
-#include "../../std/stdio.cpp"
+#include "../../std/stdterm.cpp"
 
 void echoCommand(char* commandParts[], const uint32_t tokenCount) {
   for (size_t i = 0; i < tokenCount; i++) {
@@ -8,9 +8,9 @@ void echoCommand(char* commandParts[], const uint32_t tokenCount) {
       continue;
     }
     if (i > 1) {
-      printString(" ");
+      termPrintString(" ");
     }
-    printString(commandParts[i]);
+    termPrintString(commandParts[i]);
   }
-  printLn();
+  termPrintLn();
 }

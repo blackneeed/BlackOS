@@ -1,45 +1,20 @@
 #pragma once
-
 #include "stdlib.cpp"
 #include "stdport.cpp"
 #include "stdcolor.cpp"
 #include "stdcharInfo.hpp"
 #include "../modules/kb/key.hpp"
 
-extern uint32_t keyPressCount;
-extern Key lastKeyInfo;
-bool capsLockPressed = false, leftShiftPressed = false, rightShiftPressed = false, altPressed = false, controlPressed = false;
-extern uint16_t lastPrint;
-
-// Debugging
-
-void E9_WriteChar(uint8_t character, const char* fg = ANSI_WHITE_FG, const char* bg = ANSI_BLACK_BG) {
-    for (int i = 0; fg[i] != '\0'; i++) {
-        outb(0xE9, fg[i]);
-    }
-    for (int i = 0; bg[i] != '\0'; i++) {
-        outb(0xE9, bg[i]);
-    }
-    outb(0xE9, character);
-    for (int i = 0; ANSI_RESET[i] != '\0'; i++) {
-        outb(0xE9, ANSI_RESET[i]);
-    }
-}
-
-void E9_WriteString(const char* string, const char* fg = ANSI_WHITE_FG, const char* bg = ANSI_BLACK_BG) {
-    for (size_t i = 0; string[i] != '\0'; i++) {
-        E9_WriteChar(string[i], fg, bg);
-    }
-}
-
-// Settings
-
-uint16_t cursorPos;
-uint8_t termColor = BG_BLACK | FG_WHITE;
 #define VGA_ADDRESS (uint8_t*)0xb8000
 #define VGA_COLS 80
 #define VGA_ROWS 25
 #define CRT_CONTROLLER_PORT 0x3D4
+uint16_t cursorPos;
+uint8_t termColor = BG_BLACK | FG_WHITE;
+extern uint32_t keyPressCount;
+extern Key lastKeyInfo;
+extern uint16_t lastPrint;
+bool capsLockPressed = false, leftShiftPressed = false, rightShiftPressed = false, altPressed = false, controlPressed = false;
 
 // Cursor position stuff
 
@@ -47,7 +22,7 @@ uint16_t posFromCoords(uint8_t x, uint8_t y) {
     return y * VGA_COLS + x;
 }
 
-void setCursorPos(uint16_t newPos = cursorPos) { // Defaults to cursor pos becuase it is often used to refresh the cursor
+void termSetCursorPos(uint16_t newPos = cursorPos) { // Defaults to cursor pos becuase it is often used to refresh the cursor
     outb(CRT_CONTROLLER_PORT, 0x0F);
     outb(CRT_CONTROLLER_PORT + 1, (uint8_t)(newPos & 0xFF));
     outb(CRT_CONTROLLER_PORT, 0x0E);
@@ -58,7 +33,7 @@ void setCursorPos(uint16_t newPos = cursorPos) { // Defaults to cursor pos becua
 
 // Screen scrolling
 
-void scrollScreenUp(uint8_t color = termColor) {
+void termScrollScreenUp(uint8_t color = termColor) {
     for (int y = 1; y < VGA_ROWS; y++) {
         for (int x = 0; x < VGA_COLS; x++) {
             uint16_t srcPos = posFromCoords(x, y);
@@ -76,7 +51,7 @@ void scrollScreenUp(uint8_t color = termColor) {
     }
 }
 
-void scrollScreenDown(uint8_t color = termColor) {
+void termScrollScreenDown(uint8_t color = termColor) {
     for (int y = VGA_ROWS - 2; y >= 0; y--) {
         for (int x = 0; x < VGA_COLS; x++) {
             uint16_t srcPos = posFromCoords(x, y);
@@ -96,13 +71,13 @@ void scrollScreenDown(uint8_t color = termColor) {
 
 // Printing
 
-void printChar(char character, uint8_t color = termColor)
+void termPrintChar(char character, uint8_t color = termColor)
 {
     switch (character) {
         case '\n':
             cursorPos += VGA_COLS;
             if (cursorPos >= VGA_COLS * VGA_ROWS) {
-                scrollScreenUp();
+                termScrollScreenUp();
                 cursorPos -= VGA_COLS;
             }
         case '\r':
@@ -111,7 +86,7 @@ void printChar(char character, uint8_t color = termColor)
         case '\t':
             for (int i = 0; i < TAB_WIDTH; i++) {
                 if (cursorPos >= VGA_COLS * VGA_ROWS) {
-                    scrollScreenUp(color);
+                    termScrollScreenUp(color);
                     cursorPos -= VGA_COLS;
                 }
                 *(VGA_ADDRESS + cursorPos * 2) = ' ';
@@ -121,7 +96,7 @@ void printChar(char character, uint8_t color = termColor)
             break;
         default:
             if (cursorPos >= VGA_COLS * VGA_ROWS) {
-                scrollScreenUp();
+                termScrollScreenUp();
                 cursorPos -= VGA_COLS;
             }
             *(VGA_ADDRESS + cursorPos * 2) = character;
@@ -129,26 +104,26 @@ void printChar(char character, uint8_t color = termColor)
             cursorPos++;
             break;
     }
-    setCursorPos();
+    termSetCursorPos();
 }
 
-void printString(const char* string, uint8_t color = termColor)
+void termPrintString(const char* string, uint8_t color = termColor)
 {
     for (size_t i = 0; string[i] != '\0'; i++) {
-        printChar(string[i], color);
+        termPrintChar(string[i], color);
     }
 }
 
-void printLn(const char* string, uint8_t color = termColor) {
-    printString(string, color);
-    printString("\r\n", color);
+void termPrintLn(const char* string, uint8_t color = termColor) {
+    termPrintString(string, color);
+    termPrintString("\r\n", color);
 }
 
-void printLn(uint8_t color = termColor) {
-    printString("\r\n", color);
+void termPrintLn(uint8_t color = termColor) {
+    termPrintString("\r\n", color);
 }
 
-Key getKey() {
+Key termGetKey() {
     int lastKeyPressCount = keyPressCount;
     while (keyPressCount == lastKeyPressCount) {
         // Hang
@@ -157,35 +132,41 @@ Key getKey() {
     return lastKeyInfo;
 }
 
-void deleteChar(uint8_t color = termColor) {
+void termDeleteChar(uint8_t color = termColor) {
     if (cursorPos > 0) {
         cursorPos--;
-        printChar(' ', color);
+        termPrintChar(' ', color);
         cursorPos--;
-        setCursorPos();
+        termSetCursorPos();
     }
 }
 
-int readLine(const char* message, char buffer[], size_t bufferSize, uint8_t color = termColor) {
-    printString(message, color);
+int termReadLine(const char* message, char buffer[], size_t bufferSize, uint8_t color = termColor, bool replaceInput = false, char replaceInputWith = ' ') {
+    termPrintString(message, color);
     lastPrint = cursorPos;
     int length = 0;
     while (true) {
-        Key key = getKey();
+        Key key = termGetKey();
         if (key.isCharacter && key.keyCode == character && length < bufferSize - 1) {
             CharInfo chrInfo = processCharacter(key.charScanCode);
             if (chrInfo.isEmpty) {
                 continue;
             }
-            printChar(chrInfo.chr, color);
+            if (!replaceInput) termPrintChar(chrInfo.chr, color);
+            if (replaceInput) termPrintChar(replaceInputWith, color);
             buffer[length++] = chrInfo.chr;
         } else if (key.keyCode == tab) {
-            printChar('\t', color);
+            if (!replaceInput) termPrintChar('\t', color);
+            if (replaceInput) {
+                for (int i = 0; i < TAB_WIDTH; i++) {
+                    termPrintChar(replaceInputWith, color);
+                }
+            }
         } else if (key.keyCode == backspace && cursorPos > lastPrint) {
-            deleteChar(color);
+            termDeleteChar(color);
             buffer[length--] = '\0';
         } else if (key.keyCode == enter) {
-            printLn();
+            termPrintLn();
             break;
         } else if (key.keyCode == lshiftpress || key.keyCode == lshiftrelease) {
             leftShiftPressed = !leftShiftPressed;
@@ -203,32 +184,38 @@ int readLine(const char* message, char buffer[], size_t bufferSize, uint8_t colo
     return length;
 }
 
-int readMultiLine(const char* message, char buffer[], size_t bufferSize, const char* lineWrapSymbol = "~ ", uint8_t lineWrapSymbolColor = termColor & 0b11110000 | FG_BLUE, uint8_t color = termColor) {
-    printString(message, color);
+int termReadMultiLine(const char* message, char buffer[], size_t bufferSize, const char* lineWrapSymbol = "~ ", uint8_t lineWrapSymbolColor = termColor & 0b11110000 | FG_BLUE, uint8_t color = termColor, bool replaceInput = false, char replaceInputWith = ' ') {
+    termPrintString(message, color);
     lastPrint = cursorPos;
     int length = 0;
     while (true) {
-        Key key = getKey();
+        Key key = termGetKey();
         if (key.isCharacter && key.keyCode == character && length < bufferSize - 1) {
             CharInfo chrInfo = processCharacter(key.charScanCode);
             if (chrInfo.isEmpty) {
                 continue;
             }
-            printChar(chrInfo.chr, color);
+            if (!replaceInput) termPrintChar(chrInfo.chr, color);
+            if (replaceInput) termPrintChar(replaceInputWith, color);
             buffer[length++] = chrInfo.chr;
         } else if (key.keyCode == tab) {
-            printChar('\t', color);
+            if (!replaceInput) termPrintChar('\t', color);
+            if (replaceInput) {
+                for (int i = 0; i < TAB_WIDTH; i++) {
+                    termPrintChar(replaceInputWith, color);
+                }
+            }
         } else if (key.keyCode == backspace && cursorPos > lastPrint) {
-            deleteChar(color);
+            termDeleteChar(color);
             buffer[length--] = '\0';
         } else if (key.keyCode == enter) {
             if (leftShiftPressed || rightShiftPressed) {
                 buffer[length++] = '\r';
                 buffer[length++] = '\n';
-                printLn();
-                printString(lineWrapSymbol, lineWrapSymbolColor);
+                termPrintLn();
+                termPrintString(lineWrapSymbol, lineWrapSymbolColor);
             } else {
-                printLn();
+                termPrintLn();
                 break;
             }
         } else if (key.keyCode == lshiftpress || key.keyCode == lshiftrelease) {
@@ -249,17 +236,17 @@ int readMultiLine(const char* message, char buffer[], size_t bufferSize, const c
 
 // Screen clearing
 
-void clearScreen(uint64_t color = termColor)
+void termClearScreen(uint64_t color = termColor)
 {
     for (uint16_t pos = VGA_COLS * VGA_ROWS; pos > 0; pos--) {
-        setCursorPos(pos);
-        deleteChar(color);
+        termSetCursorPos(pos);
+        termDeleteChar(color);
     }
 
-    setCursorPos(0);
+    termSetCursorPos(0);
 }
 
-void setColor(uint64_t color = termColor) {
+void termSetColor(uint64_t color = termColor) {
     for (uint16_t pos = 0; pos < VGA_COLS * VGA_ROWS; pos++) {
         *(VGA_ADDRESS + pos * 2 + 1) = color;
     }

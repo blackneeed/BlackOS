@@ -2,11 +2,11 @@
 #include "../../std/stdlib.cpp"
 #include "../../modules/kb/key.hpp"
 #include "../config.hpp"
-#include "../../std/stdio.cpp"
+#include "../../std/stdterm.cpp"
 
 EXPORT OSConfig osConfig; // main.cpp
-EXPORT bool leftShiftPressed, rightShiftPressed, capsLockPressed; // stdio.cpp
-EXPORT uint32_t keyPressCount; // stdio.cpp
+EXPORT bool leftShiftPressed, rightShiftPressed, capsLockPressed; // stdterm.cpp
+EXPORT uint32_t keyPressCount; // stdterm.cpp
 
 typedef struct OSInfo {
     bool specialKeysPressed[3];

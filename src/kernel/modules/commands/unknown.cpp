@@ -1,10 +1,10 @@
 #pragma once
 #include "../../std/stdlib.cpp"
-#include "../../std/stdio.cpp"
+#include "../../std/stdterm.cpp"
 
 void unknownCommand(char* commandParts[], const uint32_t tokenCount) {
-    printString("Unknown command '");
-    printString(commandParts[0]);
-    printLn("'!");
-    printLn("Type 'help' for help.");
+    termPrintString("Unknown command '");
+    termPrintString(commandParts[0]);
+    termPrintLn("'!");
+    termPrintLn("Type 'help' for help.");
 }

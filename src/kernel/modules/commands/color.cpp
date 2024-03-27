@@ -1,6 +1,6 @@
 #pragma once
 #include "../../std/stdlib.cpp"
-#include "../../std/stdio.cpp"
+#include "../../std/stdterm.cpp"
 #include "../../std/stdcolor.cpp"
 #include "../../std/stdstring.cpp"
 
@@ -9,21 +9,21 @@ extern uint8_t termColor; // ../drivers/Screen.cpp
 void colorCommand(char* commandParts[], const uint32_t tokenCount) {
     if (strcmp(commandParts[1], "?")) {
         if (tokenCount < 3) {
-            printLn("Syntax: color ? <color type>\r\nColor types\r\n'fg': foreground\r\n'bg': background");
+            termPrintLn("Syntax: color ? <color type>\r\nColor types\r\n'fg': foreground\r\n'bg': background");
             return;
         }
         const char* colorHelp = colorHelpLookup(commandParts[2]);
         if (colorHelp == (const char*)LOOKUP_UNKNOWN) { // Stop VSCode from yelling at me
-            printLn("Invalid color type!");
+            termPrintLn("Invalid color type!");
             return;
         }
-        printString(colorHelp);
-        printString("\r\n");
+        termPrintString(colorHelp);
+        termPrintString("\r\n");
     } else {
         const char* colorString = commandParts[1];
         if (getLength(colorString) != 2) {
-            printLn("Syntax: color <color>");
-            printLn("Type 'color ?' for more information.");
+            termPrintLn("Syntax: color <color>");
+            termPrintLn("Type 'color ?' for more information.");
             return;
         }
 
@@ -31,12 +31,12 @@ void colorCommand(char* commandParts[], const uint32_t tokenCount) {
         const uint8_t fg = getColor(colorString[1], LOOKUP_FG);
 
         if (bg == LOOKUP_UNKNOWN || fg == LOOKUP_UNKNOWN) {
-            printLn("Syntax: color <color>");
-            printLn("Type 'color ?' for more information.");
+            termPrintLn("Syntax: color <color>");
+            termPrintLn("Type 'color ?' for more information.");
             return;
         }
 
-        setColor(bg | fg);
+        termSetColor(bg | fg);
         termColor = bg | fg;
     }
 }

@@ -1,8 +1,4 @@
-
-
-
-
-#include "std/stdio.cpp"
+#include "std/stdterm.cpp"
 #include "modules/IDT/IDT.cpp"
 #include "std/stdlib.cpp"
 #include "sys/config.hpp"
@@ -15,15 +11,15 @@ char commandBuffer[MAX_COMMAND_LENGTH];
 OSConfig osConfig = OSConfig {"BlackOS", 2};
 
 void KLoop() {
-    int length = readLine("> ", commandBuffer, MAX_COMMAND_LENGTH);
+    int length = termReadLine("> ", commandBuffer, MAX_COMMAND_LENGTH);
     executeCommand(length);
 }
 
 CNAME void KStart() {
-    clearScreen();
-    printString("Welcome to ");
-    printString(osConfig.name);
-    printLn("!");
+    termClearScreen();
+    termPrintString("Welcome to ");
+    termPrintString(osConfig.name);
+    termPrintLn("!");
     E9_WriteString("\r\n");
     initializeIDT();
     while (true) { KLoop(); }

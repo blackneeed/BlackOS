@@ -1,13 +1,13 @@
 #pragma once
-#include "../../std/stdio.cpp"
+#include "../../std/stdterm.cpp"
 #include "../../std/stdlib.cpp"
 
 void helpCommand(char* commandParts[], const uint32_t tokenCount) {
-    printLn("Commands:");
-    printLn("\t- 'version'");
-    printLn("\t- 'help'");
-    printLn("\t- 'cls'");
-    printLn("\t- 'color'");
-    printLn("\t- 'echo'");
-    printLn("\t- 'hello'");
+    termPrintLn("Commands:");
+    termPrintLn("\t- 'version'");
+    termPrintLn("\t- 'help'");
+    termPrintLn("\t- 'cls'");
+    termPrintLn("\t- 'color'");
+    termPrintLn("\t- 'echo'");
+    termPrintLn("\t- 'hello'");
 }
