@@ -1,8 +1,9 @@
 #include <std/stdlib.cpp>
 #include <std/stdterm.cpp>
 #include <std/stdcolor.cpp>
+#include <sys/api/halt.hpp>
 
-extern uint8_t color; 
+extern uint8_t color;
 
 void panic(const char* message) {
     color = BG_RED | FG_LIGHTBLUE;
@@ -12,7 +13,5 @@ void panic(const char* message) {
     termPrintString("Kernel panic:\r\n");
     termSetCursorPos(posFromCoords(TAB_WIDTH * 8, Y + 3));
     termPrintString(message);
-    for (;;) {
-        asm("hlt");
-    }
+    _hcf();
 }
