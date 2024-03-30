@@ -3,11 +3,12 @@
 #include <std/stdterm.cpp>
 #include <std/stdcolor.cpp>
 #include <std/stdstring.cpp>
+#include <modules/commands/command.hpp>
 
 extern uint8_t termColor; // ../drivers/Screen.cpp
 
 void colorCommand(char* commandParts[], const uint32_t tokenCount) {
-    if (strcmp(commandParts[1], "?")) {
+    if (strcmp(commandParts[1], "?") == 0) {
         if (tokenCount < 3) {
             termPrintLn("Syntax: color ? <color type>\r\nColor types\r\n'fg': foreground\r\n'bg': background");
             return;
@@ -39,4 +40,11 @@ void colorCommand(char* commandParts[], const uint32_t tokenCount) {
         termSetColor(bg | fg);
         termColor = bg | fg;
     }
+}
+
+Command getColor() {
+    Command color;
+    color.name = "color";
+    color.action = colorCommand;
+    return color;
 }

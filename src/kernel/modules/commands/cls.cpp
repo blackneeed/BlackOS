@@ -3,6 +3,7 @@
 #include <std/stdterm.cpp>
 #include <std/stdcolor.cpp>
 #include <std/stdstring.cpp>
+#include <modules/commands/command.hpp>
 
 extern uint8_t termColor; // ../drivers/Screen.cpp
 
@@ -12,7 +13,7 @@ void clsCommand(char* commandParts[], const uint32_t tokenCount) {
         return;
     }
 
-    if (strcmp(commandParts[1], "?")) {
+    if (strcmp(commandParts[1], "?") == 0) {
         if (tokenCount < 3) {
             termPrintLn("Syntax: cls ? <color type>\r\nColor types\r\n'fg': foreground\r\n'bg': background");
             return;
@@ -43,4 +44,11 @@ void clsCommand(char* commandParts[], const uint32_t tokenCount) {
         termColor = bg | fg;
         termClearScreen();
     }
+}
+
+Command getCls() {
+    Command cls;
+    cls.name = "cls";
+    cls.action = clsCommand;
+    return cls;
 }

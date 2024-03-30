@@ -1,6 +1,7 @@
 #pragma once
 #include <std/stdint.hpp>
 #include <std/stdterm.cpp>
+#include <modules/commands/command.hpp>
 
 char nameBuffer[256];
 
@@ -10,4 +11,11 @@ void helloCommand(char* commandParts[], const uint32_t tokenCount) {
     termPrintString("Hello, ");
     termPrintString(name);
     termPrintLn("!");
+}
+
+Command getHello() {
+    Command hello;
+    hello.name = "hello";
+    hello.action = helloCommand;
+    return hello;
 }

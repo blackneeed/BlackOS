@@ -8,7 +8,7 @@ uint16_t lastPrint;
 #define MAX_COMMAND_LENGTH 128
 char commandBuffer[MAX_COMMAND_LENGTH];
 
-OSConfig osConfig = OSConfig {"BlackOS", 6};
+OSConfig osConfig = OSConfig {"BlackOS", 7};
 
 void KLoop() {
     int length = termReadLine("> ", commandBuffer, MAX_COMMAND_LENGTH);
@@ -22,6 +22,7 @@ CNAME void KStart() {
     termPrintLn("!");
     E9_WriteString("\r\n");
     initializeIDT();
+    initCommands();
     while (true) { KLoop(); }
     return;
 }

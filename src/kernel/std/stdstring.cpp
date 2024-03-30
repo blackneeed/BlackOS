@@ -1,12 +1,13 @@
 #pragma once
 #include <std/stdint.hpp>
+#include <std/stdlib.cpp>
 
 int strcmp(const char* str1, const char* str2) {
     while (*str1 && (*str1 == *str2)) {
         ++str1;
         ++str2;
     }
-    return *(const unsigned char*)str1 - *(const unsigned char*)str2 == 0;
+    return *(const unsigned char*)str1 - *(const unsigned char*)str2;
 }
 
 uint32_t splitString(char* str, char delimiter, char** tokens, uint32_t maxTokens) {
