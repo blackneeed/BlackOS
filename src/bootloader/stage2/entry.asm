@@ -63,11 +63,15 @@ StartPM:
 
 [bits 64]
 [extern KStart]
+[extern KLoop]
 
 Start64:
 	call ActivateSSE
 	call KStart
-	jmp $ ; For some reason we returned from the kernel
+	.loop:
+	call KLoop
+	jmp .loop
+	jmp $ ; This should never happen
 
 ActivateSSE:
 	mov eax, 0x1
