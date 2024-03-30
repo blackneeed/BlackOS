@@ -1,6 +1,6 @@
 #pragma once
 #include <std/stdterm.cpp>
-#include <std/stdlib.cpp>
+#include <std/stdint.hpp>
 
 void helpCommand(char* commandParts[], const uint32_t tokenCount) {
     termPrintLn("Commands:");

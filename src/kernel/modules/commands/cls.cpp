@@ -1,5 +1,5 @@
 #pragma once
-#include <std/stdlib.cpp>
+#include <std/stdint.hpp>
 #include <std/stdterm.cpp>
 #include <std/stdcolor.cpp>
 #include <std/stdstring.cpp>

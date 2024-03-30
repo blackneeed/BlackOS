@@ -1,6 +1,7 @@
 #pragma once
 #include <std/stdterm.cpp>
 #include <std/stdlib.cpp>
+#include <std/stdint.hpp>
 #include <sys/config.hpp>
 #include <sys/api/fetchInfo.cpp>
 

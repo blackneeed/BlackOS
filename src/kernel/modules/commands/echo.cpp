@@ -1,5 +1,5 @@
 #pragma once
-#include <std/stdlib.cpp>
+#include <std/stdint.hpp>
 #include <std/stdterm.cpp>
 
 void echoCommand(char* commandParts[], const uint32_t tokenCount) {

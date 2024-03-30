@@ -1,12 +1,8 @@
 #pragma once
 #include <modules/kb/PLKBSet.hpp> // Change this to import another kbset if you want another keyboard layout
 #include <std/stdcharInfo.hpp>
+#include <std/stdint.hpp>
 
-typedef unsigned long long size_t;
-typedef unsigned char uint8_t;
-typedef unsigned short uint16_t;
-typedef unsigned int uint32_t;
-typedef unsigned long long uint64_t;
 #define EXPORT extern
 #define CNAME extern "C"
 #define NULL nullptr

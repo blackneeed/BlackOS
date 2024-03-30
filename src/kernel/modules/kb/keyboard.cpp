@@ -1,5 +1,6 @@
 #pragma once
 #include <std/stdlib.cpp>
+#include <std/stdint.hpp>
 #include <std/stddebug.cpp>
 #include <modules/kb/key.hpp>
 
