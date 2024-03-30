@@ -1,7 +1,7 @@
 #pragma once
-#include "stdlib.cpp"
-#include "stdport.cpp"
-#include "stdcolor.cpp"
+#include <std/stdlib.cpp>
+#include <std/stdport.cpp>
+#include <std/stdcolor.cpp>
 
 void E9_WriteChar(uint8_t character, const char* fg = ANSI_WHITE_FG, const char* bg = ANSI_BLACK_BG) {
     for (int i = 0; fg[i] != '\0'; i++) {

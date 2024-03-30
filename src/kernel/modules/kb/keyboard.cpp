@@ -1,7 +1,7 @@
 #pragma once
-#include "../../std/stdlib.cpp"
-#include "../../std/stddebug.cpp"
-#include "key.hpp"
+#include <std/stdlib.cpp>
+#include <std/stddebug.cpp>
+#include <modules/kb/key.hpp>
 
 Key lastKeyInfo;
 uint32_t keyPressCount;

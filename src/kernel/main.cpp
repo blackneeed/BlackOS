@@ -1,14 +1,14 @@
-#include "std/stdterm.cpp"
-#include "modules/IDT/IDT.cpp"
-#include "std/stdlib.cpp"
-#include "sys/config.hpp"
-#include "modules/commands/commands.cpp"
+#include <std/stdterm.cpp>
+#include <modules/IDT/IDT.cpp>
+#include <std/stdlib.cpp>
+#include <sys/config.hpp>
+#include <modules/commands/commands.cpp>
 
 uint16_t lastPrint;
 #define MAX_COMMAND_LENGTH 128
 char commandBuffer[MAX_COMMAND_LENGTH];
 
-OSConfig osConfig = OSConfig {"BlackOS", 2};
+OSConfig osConfig = OSConfig {"BlackOS", 3};
 
 void KLoop() {
     int length = termReadLine("> ", commandBuffer, MAX_COMMAND_LENGTH);

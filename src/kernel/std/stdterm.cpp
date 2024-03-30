@@ -1,9 +1,9 @@
 #pragma once
-#include "stdlib.cpp"
-#include "stdport.cpp"
-#include "stdcolor.cpp"
-#include "stdcharInfo.hpp"
-#include "../modules/kb/key.hpp"
+#include <std/stdlib.cpp>
+#include <std/stdport.cpp>
+#include <std/stdcolor.cpp>
+#include <std/stdcharInfo.hpp>
+#include <modules/kb/key.hpp>
 
 #define VGA_ADDRESS (uint8_t*)0xb8000
 #define VGA_COLS 80

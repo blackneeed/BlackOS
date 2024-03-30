@@ -1,12 +1,12 @@
 #pragma once
-#include "../../std/stdterm.cpp"
-#include "../../std/stdlib.cpp"
-#include "../../sys/config.hpp"
-#include "../../sys/api/fetchInfo.cpp"
+#include <std/stdterm.cpp>
+#include <std/stdlib.cpp>
+#include <sys/config.hpp>
+#include <sys/api/fetchInfo.cpp>
 
 void versionCommand(char* commandParts[], const uint32_t tokenCount) {
     OSConfig config = fetchOSInfo().config;
     termPrintString(config.name);
-    termPrintChar(' ');
+    termPrintString(" Revision: ");
     termPrintLn(intToString(config.revision));
 }

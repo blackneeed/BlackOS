@@ -1,6 +1,6 @@
 #pragma once
-#include "../modules/kb/PLKBSet.hpp" // Change this to import another kbset if you want another keyboard layout
-#include "stdcharInfo.hpp"
+#include <modules/kb/PLKBSet.hpp> // Change this to import another kbset if you want another keyboard layout
+#include <std/stdcharInfo.hpp>
 
 typedef unsigned long long size_t;
 typedef unsigned char uint8_t;

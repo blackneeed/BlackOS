@@ -1,8 +1,8 @@
 #pragma once
-#include "../../std/stdlib.cpp"
-#include "../../std/stdterm.cpp"
-#include "../../std/stdcolor.cpp"
-#include "../../std/stdstring.cpp"
+#include <std/stdlib.cpp>
+#include <std/stdterm.cpp>
+#include <std/stdcolor.cpp>
+#include <std/stdstring.cpp>
 
 extern uint8_t termColor; // ../drivers/Screen.cpp
 

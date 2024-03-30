@@ -1,6 +1,6 @@
 #pragma once
-#include "../../std/stdlib.cpp"
-#include "../../std/stdterm.cpp"
+#include <std/stdlib.cpp>
+#include <std/stdterm.cpp>
 
 void echoCommand(char* commandParts[], const uint32_t tokenCount) {
   for (size_t i = 0; i < tokenCount; i++) {

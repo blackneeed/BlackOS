@@ -1,7 +1,7 @@
 #pragma once
-#include "../../std/stdlib.cpp"
-#include "../../std/stdport.cpp"
-#include "../kb/keyboard.cpp"
+#include <std/stdlib.cpp>
+#include <std/stdport.cpp>
+#include <modules/kb/keyboard.cpp>
 
 struct IDT64
 {

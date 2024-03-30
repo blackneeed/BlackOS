@@ -1,6 +1,6 @@
 #pragma once
-#include "../../std/stdlib.cpp"
-#include "../../std/stdterm.cpp"
+#include <std/stdlib.cpp>
+#include <std/stdterm.cpp>
 
 void unknownCommand(char* commandParts[], const uint32_t tokenCount) {
     termPrintString("Unknown command '");
