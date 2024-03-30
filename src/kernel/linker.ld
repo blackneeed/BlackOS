@@ -6,6 +6,7 @@ INPUT
     ../../build/stage2.o
     ../../build/main.o
     ../../build/IDT.o
+    ../../build/API.o
 )
 
 OUTPUT
