@@ -138,7 +138,7 @@ void handleCaps() {
     keyPressCount++;
 }
 
-extern "C" void isr1_handler()
+CNAME void isr1_handler()
 {
     uint8_t scanCode = inb(0x60);
     switch (scanCode) {
