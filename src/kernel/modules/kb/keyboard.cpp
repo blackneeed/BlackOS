@@ -140,10 +140,7 @@ void handleCaps() {
 
 #ifdef EXTENDED
 void handleExtendedKey(uint8_t scancode) {
-  switch (scancode) {
-    case EXTENDED_LEFTARROW:
-        
-  }
+  switch (scancode) { }
   return;
 }
 
