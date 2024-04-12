@@ -138,10 +138,37 @@ void handleCaps() {
     keyPressCount++;
 }
 
+#ifdef EXTENDED
+void handleExtendedKey(uint8_t scancode) {
+  switch (scancode) {
+    case EXTENDED_LEFTARROW:
+        
+  }
+  return;
+}
+
+bool keyExtended = false;
+#endif
+
 CNAME void isr1_handler()
 {
     uint8_t scanCode = inb(0x60);
+
+    #ifdef EXTENDED
+    if (keyExtended) {
+      handleExtendedKey(scanCode);
+      keyExtended = false;
+      return;
+    }
+    #endif
+
     switch (scanCode) {
+      #ifdef EXTENDED  
+      case EXTENDEDKEY:
+            keyExtended = true;
+            break;
+      #endif
+
         case ENTER:
             handleEnter();
             break;
@@ -162,17 +189,17 @@ CNAME void isr1_handler()
             handleLShiftPress();
             break;
 
-		case LEFTSHIFTRELEASE:
+		    case LEFTSHIFTRELEASE:
             handleLShiftRelease();
             break;
         
-		case RIGHTSHIFT:
+		    case RIGHTSHIFT:
             handleRShiftPress();
-			break;
+			      break;
 
-		case RIGHTSHIFTRELEASE:
-			handleLShiftPress();
-			break;
+        case RIGHTSHIFTRELEASE:
+			      handleLShiftPress();
+			      break;
 
         case ALTPRESS:
             handleAltPress();
