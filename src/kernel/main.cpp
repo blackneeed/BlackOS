@@ -1,3 +1,5 @@
+#define REVISION_NUMBER 12
+
 #include <std/stdterm.cpp>
 #include <modules/IDT/IDT.cpp>
 #include <std/stdint.hpp>
@@ -8,7 +10,7 @@ u16 lastPrint;
 #define MAX_COMMAND_LENGTH 128
 char commandBuffer[MAX_COMMAND_LENGTH];
 
-OSConfig osConfig = {"BlackOS", "base", 12};
+OSConfig osConfig = {"BlackOS", "base", REVISION_NUMBER};
 
 CNAME void KLoop() {
     int length = termReadLine("> ", commandBuffer, MAX_COMMAND_LENGTH);

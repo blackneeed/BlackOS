@@ -1,14 +1,6 @@
 OUTPUT_FORMAT(binary)
 ENTRY (KStart)
 
-INPUT
-(
-    ../../build/stage2.o
-    ../../build/main.o
-    ../../build/IDT.o
-    ../../build/API.o
-)
-
 OUTPUT
 (
     ../../build/kernel.bin
