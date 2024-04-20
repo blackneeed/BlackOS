@@ -4,6 +4,7 @@ BUILD=build
 $(PHONY): all
 
 all: always bootloader makeimg run clean
+build_all: always bootloader makeimg clean
 
 always:
 	mkdir -p $(BUILD)

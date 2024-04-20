@@ -10,6 +10,7 @@ build:
 	/usr/local/x86_64elfgcc/bin/x86_64-elf-ld -T"linker.ld"
 
 clean:
-	rm -rf $(BUILD)/entry.o
+	rm -rf $(BUILD)/main.o
 	rm -rf $(BUILD)/kernel.bin
 	rm -rf $(BUILD)/IDT.o
+	rm -rf $(BUILD)/API.o
