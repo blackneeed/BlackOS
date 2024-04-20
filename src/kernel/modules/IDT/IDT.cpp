@@ -6,13 +6,13 @@
 
 struct IDT64
 {
-    uint16_t offset_low;
-    uint16_t selector;
-    uint8_t ist;
-    uint8_t types_attr;
-    uint16_t offset_mid;
-    uint32_t offset_high;
-    uint32_t zero = 0;
+    u16 offset_low;
+    u16 selector;
+    u8 ist;
+    u8 types_attr;
+    u16 offset_mid;
+    u32 offset_high;
+    u32 zero = 0;
 };
 
 CNAME void isr128_handler() {
@@ -22,12 +22,12 @@ CNAME void isr128_handler() {
 }
 
 EXPORT IDT64 _idt[256];
-EXPORT uint64_t isr1;
-EXPORT uint64_t isr128;
+EXPORT u64 isr1;
+EXPORT u64 isr128;
 CNAME void LoadIDT();
 
 void remapPic() {
-    uint8_t a1, a2;
+    u8 a1, a2;
     a1 = inb(PIC1_DATA);
     a2 = inb(PIC2_DATA);
     outb(PIC1_COMMAND, ICW1_INIT | ICW1_ICW4);
@@ -46,17 +46,17 @@ void initializeIDT()
 {
 
     _idt[0x01].zero = 0;
-    _idt[0x01].offset_low = (uint16_t)(((uint64_t)&isr1 & 0x000000000000ffff));
-    _idt[0x01].offset_mid = (uint16_t)(((uint64_t)&isr1 & 0x00000000ffff0000) >> 16);
-    _idt[0x01].offset_high = (uint32_t)(((uint64_t)&isr1 & 0xffffffff00000000) >> 32);
+    _idt[0x01].offset_low = (u16)(((u64)&isr1 & 0x000000000000ffff));
+    _idt[0x01].offset_mid = (u16)(((u64)&isr1 & 0x00000000ffff0000) >> 16);
+    _idt[0x01].offset_high = (u32)(((u64)&isr1 & 0xffffffff00000000) >> 32);
     _idt[0x01].ist = 0;
     _idt[0x01].selector = 0x08;
     _idt[0x01].types_attr = 0x8e;
 
     _idt[128].zero = 0;
-    _idt[128].offset_low = (uint16_t)(((uint64_t)&isr128 & 0x000000000000ffff));
-    _idt[128].offset_mid = (uint16_t)(((uint64_t)&isr128 & 0x00000000ffff0000) >> 16);
-    _idt[128].offset_high = (uint32_t)(((uint64_t)&isr128 & 0xffffffff00000000) >> 32);
+    _idt[128].offset_low = (u16)(((u64)&isr128 & 0x000000000000ffff));
+    _idt[128].offset_mid = (u16)(((u64)&isr128 & 0x00000000ffff0000) >> 16);
+    _idt[128].offset_high = (u32)(((u64)&isr128 & 0xffffffff00000000) >> 32);
     _idt[128].ist = 0;
     _idt[128].selector = 0x08;
     _idt[128].types_attr = 0x8e;

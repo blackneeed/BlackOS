@@ -10,8 +10,8 @@ int strcmp(const char* str1, const char* str2) {
     return *(const unsigned char*)str1 - *(const unsigned char*)str2;
 }
 
-uint32_t splitString(char* str, char delimiter, char** tokens, uint32_t maxTokens) {
-    uint32_t tokenCount = 0;
+u32 splitString(char* str, char delimiter, char** tokens, u32 maxTokens) {
+    u32 tokenCount = 0;
     char* token = (char*)str;
 
     while (*str != '\0' && tokenCount < maxTokens) {
@@ -35,7 +35,7 @@ uint32_t splitString(char* str, char delimiter, char** tokens, uint32_t maxToken
 }
 
 char* toLower(char* str) {
-    for (size_t i = 0; str[i] != '\0'; i++) {
+    for (usize i = 0; str[i] != '\0'; i++) {
         if (str[i] >= 'A' && str[i] <= 'Z')
             str[i] = (char)(int)str[i] + 32;
     }
@@ -43,7 +43,7 @@ char* toLower(char* str) {
 }
 
 char* toUpper(char* str) {
-    for (size_t i = 0; str[i] != '\0'; i++) {
+    for (usize i = 0; str[i] != '\0'; i++) {
         if (str[i] <= 'z' && str[i] >= 'a')
             str[i] = (char)(int)str[i] - 32;
     }
@@ -62,8 +62,8 @@ char charToUpper(char chr) {
     return chr;
 }
 
-uint8_t getLength(const char* str) {
-    uint8_t length = 0;
+u8 getLength(const char* str) {
+    u8 length = 0;
     while (*str != '\0') {
         length += 1;
         str++;
@@ -105,8 +105,8 @@ bool endsWith(const char* str, const char* suffix) {
     if (str == nullptr || suffix == nullptr)
         return false;
 
-    size_t str_len = getLength(str);
-    size_t suffix_len = getLength(suffix);
+    usize str_len = getLength(str);
+    usize suffix_len = getLength(suffix);
 
     if (suffix_len > str_len)
         return false;

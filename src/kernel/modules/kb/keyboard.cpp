@@ -5,7 +5,7 @@
 #include <modules/kb/key.hpp>
 
 Key lastKeyInfo;
-uint32_t keyPressCount;
+u32 keyPressCount;
 
 void handleCharacter(int scanCode) {
     if (!processCharacter(scanCode).isEmpty) {
@@ -140,7 +140,7 @@ void handleCaps() {
 
 CNAME void isr1_handler()
 {
-    uint8_t scanCode = inb(0x60);
+    u8 scanCode = inb(0x60);
 
     switch (scanCode) {
         case ENTER:

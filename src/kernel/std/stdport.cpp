@@ -11,14 +11,14 @@
 
 // IN/OUT port
 
-inline void outb(uint16_t port, uint8_t val)
+inline void outb(u16 port, u8 val)
 {
     asm volatile ("outb %0, %1" : : "a"(val), "Nd"(port));
 }
 
-inline uint8_t inb(uint16_t port)
+inline u8 inb(u16 port)
 {
-    uint8_t returnVal;
+    u8 returnVal;
     asm volatile ("inb %1, %0" : "=a"(returnVal) : "Nd"(port));
     return returnVal;
 }

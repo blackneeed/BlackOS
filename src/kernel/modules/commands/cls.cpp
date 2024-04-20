@@ -5,9 +5,9 @@
 #include <std/stdstring.cpp>
 #include <modules/commands/command.hpp>
 
-extern uint8_t termColor; // ../drivers/Screen.cpp
+extern u8 termColor; // ../drivers/Screen.cpp
 
-void clsCommand(char* commandParts[], const uint32_t tokenCount) {
+void clsCommand(char* commandParts[], const u32 tokenCount) {
     if (tokenCount < 2) {
         termClearScreen();
         return;
@@ -32,8 +32,8 @@ void clsCommand(char* commandParts[], const uint32_t tokenCount) {
             return;
         }
 
-        const uint8_t bg = getColor(colorString[0], LOOKUP_BG);
-        const uint8_t fg = getColor(colorString[1], LOOKUP_FG);
+        const u8 bg = getColor(colorString[0], LOOKUP_BG);
+        const u8 fg = getColor(colorString[1], LOOKUP_FG);
 
         if (bg == LOOKUP_UNKNOWN || fg == LOOKUP_UNKNOWN) {
             termPrintString("Syntax: cls <color>\r\n");

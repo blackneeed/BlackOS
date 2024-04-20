@@ -6,45 +6,45 @@
 #include <std/stdcharInfo.hpp>
 #include <modules/kb/key.hpp>
 
-#define VGA_ADDRESS (uint8_t*)0xb8000
+#define VGA_ADDRESS (u8*)0xb8000
 #define VGA_COLS 80
 #define VGA_ROWS 25
 #define CRT_CONTROLLER_PORT 0x3D4
-uint16_t cursorPos;
-uint8_t termColor = BG_BLACK | FG_WHITE;
-extern uint32_t keyPressCount;
+u16 cursorPos;
+u8 termColor = BG_BLACK | FG_WHITE;
+extern u32 keyPressCount;
 extern Key lastKeyInfo;
-extern uint16_t lastPrint;
+extern u16 lastPrint;
 bool capsLockPressed = false, leftShiftPressed = false, rightShiftPressed = false, altPressed = false, controlPressed = false;
 
 // Cursor position stuff
 
-uint16_t posFromCoords(uint8_t x, uint8_t y) {
+u16 posFromCoords(u8 x, u8 y) {
     return y * VGA_COLS + x;
 }
 
-void termSetCursorPos(uint16_t newPos = cursorPos) { // Defaults to cursor pos becuase it is often used to refresh the cursor
+void termSetCursorPos(u16 newPos = cursorPos) { // Defaults to cursor pos becuase it is often used to refresh the cursor
     outb(CRT_CONTROLLER_PORT, 0x0F);
-    outb(CRT_CONTROLLER_PORT + 1, (uint8_t)(newPos & 0xFF));
+    outb(CRT_CONTROLLER_PORT + 1, (u8)(newPos & 0xFF));
     outb(CRT_CONTROLLER_PORT, 0x0E);
-    outb(CRT_CONTROLLER_PORT + 1, (uint8_t)((newPos >> 8) & 0xFF));
+    outb(CRT_CONTROLLER_PORT + 1, (u8)((newPos >> 8) & 0xFF));
 
     cursorPos = newPos;
 }
 
 // Screen scrolling
 
-void termScrollScreenUp(uint8_t color = termColor) {
+void termScrollScreenUp(u8 color = termColor) {
     for (int y = 1; y < VGA_ROWS; y++) {
         for (int x = 0; x < VGA_COLS; x++) {
-            uint16_t srcPos = posFromCoords(x, y);
-            uint16_t destPos = posFromCoords(x, y - 1);
+            u16 srcPos = posFromCoords(x, y);
+            u16 destPos = posFromCoords(x, y - 1);
             *(VGA_ADDRESS + destPos * 2) = *(VGA_ADDRESS + srcPos * 2);
             *(VGA_ADDRESS + destPos * 2 + 1) = *(VGA_ADDRESS + srcPos * 2 + 1);
         }
     }
 
-    uint16_t lastRowPos = posFromCoords(0, VGA_ROWS - 1);
+    u16 lastRowPos = posFromCoords(0, VGA_ROWS - 1);
     for (int x = 0; x < VGA_COLS; x++) {
         *(VGA_ADDRESS + lastRowPos * 2) = ' ';
         *(VGA_ADDRESS + lastRowPos * 2 + 1) = color;
@@ -52,17 +52,17 @@ void termScrollScreenUp(uint8_t color = termColor) {
     }
 }
 
-void termScrollScreenDown(uint8_t color = termColor) {
+void termScrollScreenDown(u8 color = termColor) {
     for (int y = VGA_ROWS - 2; y >= 0; y--) {
         for (int x = 0; x < VGA_COLS; x++) {
-            uint16_t srcPos = posFromCoords(x, y);
-            uint16_t destPos = posFromCoords(x, y + 1);
+            u16 srcPos = posFromCoords(x, y);
+            u16 destPos = posFromCoords(x, y + 1);
             *(VGA_ADDRESS + destPos * 2) = *(VGA_ADDRESS + srcPos * 2);
             *(VGA_ADDRESS + destPos * 2 + 1) = *(VGA_ADDRESS + srcPos * 2 + 1);
         }
     }
 
-    uint16_t firstRowPos = posFromCoords(0, 0);
+    u16 firstRowPos = posFromCoords(0, 0);
     for (int x = 0; x < VGA_COLS; x++) {
         *(VGA_ADDRESS + firstRowPos * 2) = ' ';
         *(VGA_ADDRESS + firstRowPos * 2 + 1) = color;
@@ -72,7 +72,7 @@ void termScrollScreenDown(uint8_t color = termColor) {
 
 // Printing
 
-void termPrintChar(char character, uint8_t color = termColor)
+void termPrintChar(char character, u8 color = termColor)
 {
     switch (character) {
         case '\n':
@@ -108,19 +108,19 @@ void termPrintChar(char character, uint8_t color = termColor)
     termSetCursorPos();
 }
 
-void termPrintString(const char* string, uint8_t color = termColor)
+void termPrintString(const char* string, u8 color = termColor)
 {
-    for (size_t i = 0; string[i] != '\0'; i++) {
+    for (usize i = 0; string[i] != '\0'; i++) {
         termPrintChar(string[i], color);
     }
 }
 
-void termPrintLn(const char* string, uint8_t color = termColor) {
+void termPrintLn(const char* string, u8 color = termColor) {
     termPrintString(string, color);
     termPrintString("\r\n", color);
 }
 
-void termPrintLn(uint8_t color = termColor) {
+void termPrintLn(u8 color = termColor) {
     termPrintString("\r\n", color);
 }
 
@@ -133,7 +133,7 @@ Key termGetKey() {
     return lastKeyInfo;
 }
 
-void termDeleteChar(uint8_t color = termColor) {
+void termDeleteChar(u8 color = termColor) {
     if (cursorPos > 0) {
         cursorPos--;
         termPrintChar(' ', color);
@@ -142,7 +142,7 @@ void termDeleteChar(uint8_t color = termColor) {
     }
 }
 
-int termReadLine(const char* message, char buffer[], size_t bufferSize, uint8_t color = termColor, bool replaceInput = false, char replaceInputWith = ' ') {
+int termReadLine(const char* message, char buffer[], usize bufferSize, u8 color = termColor, bool replaceInput = false, char replaceInputWith = ' ') {
     termPrintString(message, color);
     lastPrint = cursorPos;
     int length = 0;
@@ -185,7 +185,7 @@ int termReadLine(const char* message, char buffer[], size_t bufferSize, uint8_t 
     return length;
 }
 
-int termReadMultiLine(const char* message, char buffer[], size_t bufferSize, const char* lineWrapSymbol = "~ ", uint8_t lineWrapSymbolColor = termColor & 0b11110000 | FG_BLUE, uint8_t color = termColor, bool replaceInput = false, char replaceInputWith = ' ') {
+int termReadMultiLine(const char* message, char buffer[], usize bufferSize, const char* lineWrapSymbol = "~ ", u8 lineWrapSymbolColor = termColor & 0b11110000 | FG_BLUE, u8 color = termColor, bool replaceInput = false, char replaceInputWith = ' ') {
     termPrintString(message, color);
     lastPrint = cursorPos;
     int length = 0;
@@ -237,9 +237,9 @@ int termReadMultiLine(const char* message, char buffer[], size_t bufferSize, con
 
 // Screen clearing
 
-void termClearScreen(uint64_t color = termColor)
+void termClearScreen(u64 color = termColor)
 {
-    for (uint16_t pos = VGA_COLS * VGA_ROWS; pos > 0; pos--) {
+    for (u16 pos = VGA_COLS * VGA_ROWS; pos > 0; pos--) {
         termSetCursorPos(pos);
         termDeleteChar(color);
     }
@@ -247,8 +247,8 @@ void termClearScreen(uint64_t color = termColor)
     termSetCursorPos(0);
 }
 
-void termSetColor(uint64_t color = termColor) {
-    for (uint16_t pos = 0; pos < VGA_COLS * VGA_ROWS; pos++) {
+void termSetColor(u64 color = termColor) {
+    for (u16 pos = 0; pos < VGA_COLS * VGA_ROWS; pos++) {
         *(VGA_ADDRESS + pos * 2 + 1) = color;
     }
 }

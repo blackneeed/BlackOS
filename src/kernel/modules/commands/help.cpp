@@ -3,7 +3,7 @@
 #include <std/stdint.hpp>
 #include <modules/commands/command.hpp>
 
-void helpCommand(char* commandParts[], const uint32_t tokenCount) {
+void helpCommand(char* commandParts[], const u32 tokenCount) {
     termPrintLn("Commands:");
     termPrintLn("\t- 'version'");
     termPrintLn("\t- 'help'");

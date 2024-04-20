@@ -6,7 +6,7 @@
 
 EXPORT OSConfig osConfig; // main.cpp
 EXPORT bool leftShiftPressed, rightShiftPressed, capsLockPressed; // stdterm.cpp
-EXPORT uint32_t keyPressCount; // stdterm.cpp
+EXPORT u32 keyPressCount; // stdterm.cpp
 
 typedef struct OSInfo {
     bool specialKeysPressed[3];

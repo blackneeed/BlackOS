@@ -3,8 +3,8 @@
 #include <std/stdterm.cpp>
 #include <modules/commands/command.hpp>
 
-void echoCommand(char* commandParts[], const uint32_t tokenCount) {
-  for (size_t i = 0; i < tokenCount; i++) {
+void echoCommand(char* commandParts[], const u32 tokenCount) {
+  for (usize i = 0; i < tokenCount; i++) {
     if (i == 0) {
       continue;
     }

@@ -3,5 +3,5 @@
 
 typedef struct Command {
     const char* name;
-    void (*action)(char* commandParts[], const uint32_t tokenCount);
+    void (*action)(char* commandParts[], const u32 tokenCount);
 } Command;

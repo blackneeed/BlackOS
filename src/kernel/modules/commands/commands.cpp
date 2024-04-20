@@ -1,5 +1,6 @@
 #pragma once
 #include <std/stdstring.cpp>
+#include <std/stdint.hpp>
 #include <modules/commands/command.hpp>
 #include <modules/commands/cls.cpp>
 #include <modules/commands/help.cpp>
@@ -30,7 +31,7 @@ void initCommands() {
     commands[5] = getHello();
 }
 
-void callCommand(char* commandParts[], const uint32_t tokenCount, const char* command) {
+void callCommand(char* commandParts[], const u32 tokenCount, const char* command) {
     bool foundCommand = false;
     int commandIndex = 0;
     for (int i = 0; i < commandCount && !foundCommand; i++) {
@@ -51,7 +52,7 @@ void executeCommand(int length) {
     commandBuffer[length] = '\0';
     const char* commandAll = (const char*)commandBuffer;
     char* commandParts[MAX_COMMAND_ARGS + 1] = {}; // Command arguments + 1 (leaving space for name)
-    const uint32_t tokenCount = splitString((char*)commandAll, ' ', commandParts, MAX_COMMAND_ARGS + 1);
+    const u32 tokenCount = splitString((char*)commandAll, ' ', commandParts, MAX_COMMAND_ARGS + 1);
     const char* command = toLower(commandParts[0]);
     if (isSpace(command)) {
         return;

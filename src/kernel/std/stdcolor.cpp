@@ -59,7 +59,7 @@
 #define LOOKUP_BG 0
 #define LOOKUP_FG 1
 
-uint8_t getColor(char c, int mode) {
+u8 getColor(char c, int mode) {
   if (mode == LOOKUP_BG) {
     switch (charToUpper(c)) {
       case '0': return BG_BLACK; break;

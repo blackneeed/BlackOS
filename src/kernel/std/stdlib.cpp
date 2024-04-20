@@ -15,7 +15,7 @@ char intToStringOutput[128];
 template<typename T>
 const char* intToString(T value) {
 
-	uint8_t isNegative = 0;
+	u8 isNegative = 0;
 
 	if (value < 0) {
 		isNegative = 1;
@@ -23,35 +23,35 @@ const char* intToString(T value) {
 		intToStringOutput[0] = '-';
 	}
 
-	uint8_t size = 0;
-	uint64_t sizeTester = (uint64_t)value;
+	u8 size = 0;
+	u64 sizeTester = (u64)value;
 	while (sizeTester / 10 > 0) {
 		sizeTester /= 10;
 		size++;
 	}
 
-	uint8_t index = 0;
-	uint64_t newValue = (uint64_t)value;
+	u8 index = 0;
+	u64 newValue = (u64)value;
 	while (newValue / 10 > 0) {
-		uint8_t remainder = newValue % 10;
+		u8 remainder = newValue % 10;
 		newValue /= 10;
 		intToStringOutput[isNegative + size - index] = remainder + 48; 
 		index++;
 	}
-	uint8_t remainder = newValue % 10;
+	u8 remainder = newValue % 10;
 	intToStringOutput[isNegative + size - index] = remainder + 48;
 	intToStringOutput[isNegative + size + 1] = 0;
 	return intToStringOutput;
 }
 
-const char* intToString(uint8_t value) { return intToString<uint8_t>(value); }
-const char* intToString(uint16_t value) { return intToString<uint16_t>(value); }
-const char* intToString(uint32_t value) { return intToString<uint32_t>(value); }
-const char* intToString(uint64_t value) { return intToString<uint64_t>(value); }
-const char* intToString(char value) { return intToString<char>(value); }
-const char* intToString(short value) { return intToString<short>(value); }
-const char* intToString(int value) { return intToString<int>(value); }
-const char* intToString(long long value) { return intToString<long long>(value); }
+const char* intToString(u8 value) { return intToString<u8>(value); }
+const char* intToString(u16 value) { return intToString<u16>(value); }
+const char* intToString(u32 value) { return intToString<u32>(value); }
+const char* intToString(u64 value) { return intToString<u64>(value); }
+const char* intToString(i8 value) { return intToString<i8>(value); }
+const char* intToString(i16 value) { return intToString<i16>(value); }
+const char* intToString(i32 value) { return intToString<i32>(value); }
+const char* intToString(i64 value) { return intToString<i64>(value); }
 
 CharInfo processCharacter(int scanCode) {
 	if ((leftShiftPressed || rightShiftPressed) && altPressed) {

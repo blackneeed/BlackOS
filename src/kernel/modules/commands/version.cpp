@@ -6,7 +6,7 @@
 #include <sys/api/fetchInfo.cpp>
 #include <modules/commands/command.hpp>
 
-void versionCommand(char* commandParts[], const uint32_t tokenCount) {
+void versionCommand(char* commandParts[], const u32 tokenCount) {
     OSConfig config = fetchOSInfo().config;
     termPrintString(config.name);
     termPrintString(" Revision: ");
