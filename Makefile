@@ -34,3 +34,4 @@ clean:
 	$(MAKE) -C $(SRC)/bootloader/stage2 clean BUILD=$(abspath $(BUILD))
 	$(MAKE) -C $(SRC)/kernel clean BUILD=$(abspath $(BUILD))
 	rm -rf $(BUILD)/BlackOSBuild.bin
+	python3 scripts/auto_increment_revision_number.py src/kernel/main.cpp
