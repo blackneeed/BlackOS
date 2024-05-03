@@ -1,9 +1,7 @@
 #include <std/stdint.cpp>
 #include <std/stdterm.cpp>
 #include <std/stdcolor.cpp>
-#include <sys/api/halt.hpp>
-
-extern uint8_t color;
+#include <sys/api/api.hpp>
 
 void panic(const char* message) {
     color = BG_RED | FG_LIGHTBLUE;
