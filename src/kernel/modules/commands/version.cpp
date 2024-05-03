@@ -3,7 +3,7 @@
 #include <std/stdlib.cpp>
 #include <std/stdint.hpp>
 #include <sys/config.hpp>
-#include <sys/api/fetchInfo.cpp>
+#include <sys/api.cpp>
 #include <modules/commands/command.hpp>
 
 void versionCommand(char* commandParts[], const u32 tokenCount) {
