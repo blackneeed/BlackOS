@@ -15,8 +15,37 @@ struct IDT64
     u32 zero = 0;
 };
 
+void handleSyscall() {
+    u64 rax, rdi, rsi, rdx, r9, r8;
+    asm volatile("movq %%rax, %0" : "=r" (rax));
+    asm volatile("movq %%rdi, %0" : "=r" (rdi));
+    asm volatile("movq %%rsi, %0" : "=r" (rsi));
+    asm volatile("movq %%rdx, %0" : "=r" (rdx));
+    asm volatile("movq %%r9, %0" : "=r" (r9));
+    asm volatile("movq %%r8, %0" : "=r" (r8));
+    E9_WriteString("Value of rax: ");
+    E9_WriteString(intToString(rax));
+    E9_WriteString("\r\n");
+    E9_WriteString("Value of rdi: ");
+    E9_WriteString(intToString(rdi));
+    E9_WriteString("\r\n");
+    E9_WriteString("Value of rsi: ");
+    E9_WriteString(intToString(rsi));
+    E9_WriteString("\r\n");
+    E9_WriteString("Value of rdx: ");
+    E9_WriteString(intToString(rdx));
+    E9_WriteString("\r\n");
+    E9_WriteString("Value of r9: ");
+    E9_WriteString(intToString(r9));
+    E9_WriteString("\r\n");
+    E9_WriteString("Value of r8: ");
+    E9_WriteString(intToString(r8));
+    E9_WriteString("\r\n");
+}
+
 CNAME void isr128_handler() {
     E9_WriteString("Interrupt 0x80 (syscall) called!\r\n");
+    handleSyscall();
     outb(0x20, 0x20);
     outb(0xa0, 0x20);
 }
