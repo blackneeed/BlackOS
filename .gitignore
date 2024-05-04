@@ -1,6 +1,4 @@
-build
-oldBuilds
 .vscode
-.idea
+build
 ARTICLES.md
 NOTES.md
