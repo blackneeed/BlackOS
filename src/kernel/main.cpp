@@ -1,4 +1,4 @@
-#define REVISION_NUMBER 19
+#define REVISION_NUMBER 22
 
 #include <std/stdterm.cpp>
 #include <modules/IDT/IDT.cpp>
@@ -24,8 +24,6 @@ CNAME void KStart() {
     termPrintString(" (");
     termPrintString(osConfig.distro);
     termPrintLn(")!");
-    // asm volatile ("int $0x80");
-    handleSyscall();
     E9_WriteString("\r\n");
     initializeIDT();
     initCommands();
